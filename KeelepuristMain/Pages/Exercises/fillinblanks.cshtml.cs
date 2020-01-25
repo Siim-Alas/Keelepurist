@@ -23,23 +23,27 @@ namespace KeelepuristMain
         public IActionResult OnGet(string exerciseName)
         {
             if (string.IsNullOrEmpty(exerciseName)) {
-                var exercises = System.IO.Directory.GetFiles("wwwroot/StaticContent/exercises/");
-                var rndNum = _rnd.Next(0, exercises.Length - 1);
+                var exerciseNames = System.IO.Directory.GetFiles("wwwroot/StaticContent/exercises/").ToList();
+                exerciseNames = exerciseNames.Select((e) => e.Split('/').Last()).ToList();
 
-                var randomRawText = System.IO.File.ReadAllText(exercises[rndNum]);
+                var rndNum = _rnd.Next(0, exerciseNames.Count - 1);
 
-                Exercise = new ExerciseModel() { Name = exercises[rndNum] };
+                var randomRawText = System.IO.File.ReadAllText($"wwwroot/StaticContent/exercises/{exerciseNames[rndNum]}");
+
+                Exercise = new ExerciseModel() { Name = exerciseNames[rndNum] };
                 Exercise.PopulateFromString(randomRawText);
                 return Page();
             }
-            var rawText = System.IO.File.ReadAllText(exerciseName);
+            var rawText = System.IO.File.ReadAllText($"wwwroot/StaticContent/exercises/{exerciseName}");
             Exercise = new ExerciseModel() { Name = exerciseName };
             Exercise.PopulateFromString(rawText);
             return Page();
         }
-        public IActionResult OnPost(string exercise)
+        public IActionResult OnPost()
         {
-            Exercise = JsonConvert.DeserializeObject<ExerciseModel>(exercise);
+            Exercise = JsonConvert.DeserializeObject<ExerciseModel>(
+                       Request.Form["exerciseJson"]
+                       );
 
             for (var i = 0; i < Exercise.BlankSpaces.Count; i++)
             {
@@ -48,7 +52,7 @@ namespace KeelepuristMain
 
             if (Exercise.BlankSpaces.TrueForAll((e) => e.UserAnsweredRight))
             {
-                return RedirectToPage("../index");
+                return Page();
             }
             return Page();
         }

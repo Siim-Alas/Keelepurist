@@ -1,0 +1,12 @@
+﻿@page
+@model KeelepuristMain.ExerciseGlossaryModel
+@{
+    ViewData["Title"] = "ExerciseGlossary";
+}
+
+<h1>Lünkadega harjutused</h1>
+
+@foreach (var name in Model.ExerciseNames)
+{
+    <a asp-route-exerciseName="@name" asp-page="/Exercises/FillInBlanks">@name</a>
+}

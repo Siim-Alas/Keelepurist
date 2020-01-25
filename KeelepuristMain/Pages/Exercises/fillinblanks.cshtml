@@ -18,8 +18,11 @@
         // Odd numbers are always blank spaces
         else
         {
-            <input name="@((i - 1) / 2)" type="text" value="@Model.Exercise.BlankSpaces[(i - 1) / 2].UserAnswer">
+            <input class='@(Model.Exercise.BlankSpaces[(i - 1) / 2].UserAnsweredRight ? "text-info" : "")' name="@((i - 1) / 2)" type="text" value="@Model.Exercise.BlankSpaces[(i - 1) / 2].UserAnswer">
         }
     }
-    <input asp-route-exercise="@JsonConvert.SerializeObject(Model.Exercise)" type="submit" value="Esita" />
+    <input type="hidden" name="exerciseJson" value="@JsonConvert.SerializeObject(Model.Exercise)" />
+    <input  type="submit" value="Esita" />
 </form>
+
+<a asp-page="/Exercises/ExerciseGlossary">Tagasi loendisse</a>
