@@ -1,0 +1,25 @@
+﻿@page
+@using Newtonsoft.Json
+@model KeelepuristMain.FillInBlanksModel
+@{
+    ViewData["Title"] = "Täida lüngad";
+    var userInput = new List<string>();
+}
+
+<h1>Täida lüngad</h1>
+<form method="post">
+    @for (var i = 0; i < Model.Exercise.Texts.Count + Model.Exercise.BlankSpaces.Count; i++)
+    {
+        // Even numbers are always text
+        if (i % 2 == 0)
+        {
+            @Model.Exercise.Texts[i / 2]
+        }
+        // Odd numbers are always blank spaces
+        else
+        {
+            <input name="@((i - 1) / 2)" type="text" value="@Model.Exercise.BlankSpaces[(i - 1) / 2].UserAnswer">
+        }
+    }
+    <input asp-route-exercise="@JsonConvert.SerializeObject(Model.Exercise)" type="submit" value="Esita" />
+</form>

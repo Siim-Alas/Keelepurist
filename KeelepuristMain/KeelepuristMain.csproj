@@ -5,7 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\soundpack\" />
+    <Compile Remove="wwwroot\exercises\**" />
+    <Compile Remove="wwwroot\NewFolder\**" />
+    <Compile Remove="wwwroot\soundpack\**" />
+    <Content Remove="wwwroot\exercises\**" />
+    <Content Remove="wwwroot\NewFolder\**" />
+    <Content Remove="wwwroot\soundpack\**" />
+    <EmbeddedResource Remove="wwwroot\exercises\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\soundpack\**" />
+    <None Remove="wwwroot\exercises\**" />
+    <None Remove="wwwroot\NewFolder\**" />
+    <None Remove="wwwroot\soundpack\**" />
   </ItemGroup>
 
   <ItemGroup>

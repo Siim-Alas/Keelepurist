@@ -57,7 +57,7 @@ namespace KeelepuristMain
             var wordIdString = wordId.ToString().PadLeft(5, '0');
             WavFileString = $"psv_{wordIdString}.wav";
 
-            var line = System.IO.File.ReadLines("wwwroot/soundpack/soundpack.txt").Skip(wordId - 1).Take(1).First();
+            var line = System.IO.File.ReadLines("wwwroot/StaticContent/soundpack/soundpack.txt").Skip(wordId - 1).Take(1).First();
             Word = new string((from c in line.Split('\t').Last()
                                where char.IsWhiteSpace(c) || char.IsLetterOrDigit(c)
                                select c).ToArray());
