@@ -1,0 +1,40 @@
+﻿@page
+@model KeelepuristMain.EtteytlusModel
+@{
+    ViewData["Title"] = "etteytlus";
+    
+}
+
+<h1>etteytlus</h1>
+
+<audio autoplay>
+    <source src="~/soundpack/@Model.WavFileString" type="audio/wav" />
+</audio>
+
+<form method="post">
+    @switch (Model.UserAnswer)
+    {
+        case KeelepuristMain.EtteytlusModel.AnswerTypes.Right:
+            <p>Õige</p>
+            <p class="text-info">@Model.Word</p>
+            break;
+
+        case KeelepuristMain.EtteytlusModel.AnswerTypes.Wrong:
+            <p class="text-danger">Proovi uuesti!</p>
+            <div>
+                <label>Sõna: </label>
+                <input type="text" name="input" value="" />
+            </div>
+            <input class="btn btn-primary" asp-route-wordId="@Model.WordId" type="submit" value="Sisesta" />
+            break;
+
+        case KeelepuristMain.EtteytlusModel.AnswerTypes.None:
+            <div>
+                <label>Sõna: </label>
+                <input type="text" name="input" value="" />
+            </div>
+            <input class="btn btn-primary" asp-route-wordId="@Model.WordId" type="submit" value="Sisesta" />
+            break;
+    }
+</form>
+<a class="btn btn-info" asp-page="./etteytlus">Uus sõna</a>
