@@ -9,11 +9,17 @@ namespace KeelepuristMain
 {
     public class ExerciseGlossaryModel : PageModel
     {
+        public List<string> SubDirectoryNames { get; set; }
         public List<string> ExerciseNames { get; set; }
-        public void OnGet()
+        public void OnGet(string subDirectory)
         {
-            var exerciseNames = System.IO.Directory.GetFiles("wwwroot/StaticContent/exercises/").ToList();
-            ExerciseNames = exerciseNames.Select((e) => e.Split('/').Last()).ToList();
+            // Currently only supports ONE level of subdirectories!!!
+
+            var subDirectoryPaths = System.IO.Directory.GetDirectories($"wwwroot/StaticContent/exercises/{subDirectory}", "*", System.IO.SearchOption.TopDirectoryOnly);
+            SubDirectoryNames = subDirectoryPaths.Select((e) => e.Split('/').Last()).ToList();
+
+            var exercisePaths = System.IO.Directory.GetFiles($"wwwroot/StaticContent/exercises/{subDirectory}");
+            ExerciseNames = exercisePaths.Select((e) => e.Split('/').Last()).ToList();
         }
     }
 }

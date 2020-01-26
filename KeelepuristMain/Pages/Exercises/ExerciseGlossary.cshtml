@@ -6,6 +6,11 @@
 
 <h1>Lünkadega harjutused</h1>
 
+@foreach (var dir in Model.SubDirectoryNames)
+{
+    <a asp-route-subDirectory="@dir" asp-page="/Exercises/ExerciseGlossary">@dir</a>
+}
+
 @foreach (var name in Model.ExerciseNames)
 {
     <a asp-route-exerciseName="@name" asp-page="/Exercises/FillInBlanks">@name</a>
