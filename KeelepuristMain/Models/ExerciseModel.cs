@@ -22,7 +22,7 @@ namespace KeelepuristMain.Models
                 }
                 else
                 {
-                    BlankSpaces.Add(new BlankSpaceModel() { CorrectAnswers = inputArray[i].Split('|').ToList() });
+                    BlankSpaces.Add(new BlankSpaceModel(inputArray[i]));
                 }
             }
         }

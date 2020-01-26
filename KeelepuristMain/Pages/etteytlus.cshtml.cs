@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KeelepuristMain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -15,22 +16,15 @@ namespace KeelepuristMain
             _rnd = new Random();
         }
 
+        [BindProperty]
         public int WordId { get; set; }
+        [BindProperty]
         public string WavFileString { get; set; }
-        public string Word { get; set; }
-        public AnswerTypes UserAnswer { get; set; } = AnswerTypes.None;
-
-        public enum AnswerTypes
-        {
-            Right,
-            Wrong,
-            None
-        };
+        [BindProperty]
+        public BlankSpaceModel BlankSpace { get; set; }
 
         public IActionResult OnGet()
         {
-            UserAnswer = AnswerTypes.None;
-
             //TODO: implement proper algorithm for searching since lines and indexes don't match for later files.
             var rndNum = _rnd.Next(1, 28);
 
@@ -38,16 +32,9 @@ namespace KeelepuristMain
 
             return Page();
         }
-        public IActionResult OnPost(int wordId, string input)
+        public IActionResult OnPost()
         {
-            SetPropertiesFromWordId(wordId);
-
-            if (input == Word)
-            {
-                UserAnswer = AnswerTypes.Right;
-                return Page();
-            }
-            UserAnswer = AnswerTypes.Wrong;
+            BlankSpace.CorrectAnswers = BlankSpace.CorrectAnswers[0].Split("\t").ToList();
             return Page();
         }
         private void SetPropertiesFromWordId(int wordId)
@@ -58,9 +45,9 @@ namespace KeelepuristMain
             WavFileString = $"psv_{wordIdString}.wav";
 
             var line = System.IO.File.ReadLines("wwwroot/StaticContent/soundpack/soundpack.txt").Skip(wordId - 1).Take(1).First();
-            Word = new string((from c in line.Split('\t').Last()
+            BlankSpace = new BlankSpaceModel(new string((from c in line.Split('\t').Last()
                                where char.IsWhiteSpace(c) || char.IsLetterOrDigit(c)
-                               select c).ToArray());
+                               select c).ToArray()));
         }
     }
 }

@@ -12,29 +12,13 @@
 </audio>
 
 <form method="post">
-    @switch (Model.UserAnswer)
-    {
-        case KeelepuristMain.EtteytlusModel.AnswerTypes.Right:
-            <p>Õige</p>
-            <p class="text-info">@Model.Word</p>
-            break;
-
-        case KeelepuristMain.EtteytlusModel.AnswerTypes.Wrong:
-            <p class="text-danger">Proovi uuesti!</p>
-            <div>
-                <label>Sõna: </label>
-                <input type="text" name="input" value="" />
-            </div>
-            <input class="btn btn-primary" asp-route-wordId="@Model.WordId" type="submit" value="Sisesta" />
-            break;
-
-        case KeelepuristMain.EtteytlusModel.AnswerTypes.None:
-            <div>
-                <label>Sõna: </label>
-                <input type="text" name="input" value="" />
-            </div>
-            <input class="btn btn-primary" asp-route-wordId="@Model.WordId" type="submit" value="Sisesta" />
-            break;
-    }
+    <div>
+        <label>Sõna: </label>
+        <input class='@(Model.BlankSpace.UserAnsweredRight ? "text-info" : "")' type="text" asp-for="BlankSpace.UserAnswer" value="@Model.BlankSpace.UserAnswer" />
+    </div>
+    <input type="hidden" asp-for="WordId" value="@Model.WordId" />
+    <input type="hidden" asp-for="WavFileString" value="@Model.WavFileString" />
+    <input type="hidden" asp-for="BlankSpace.CorrectAnswers" value='@string.Join("\t", Model.BlankSpace.CorrectAnswers)' />
+    <input class="btn btn-primary" type="submit" value="Sisesta" />
 </form>
 <a class="btn btn-info" asp-page="./Etteytlus">Uus sõna</a>

@@ -7,7 +7,7 @@ namespace KeelepuristMain.Models
 {
     public class BlankSpaceModel
     {
-        public List<string> CorrectAnswers { get; set; }
+        public List<string> CorrectAnswers { get; set; } = new List<string>();
         public string UserAnswer { get; set; } = "";
         public bool UserAnsweredRight
         {
@@ -15,6 +15,14 @@ namespace KeelepuristMain.Models
             {
                 return CorrectAnswers.Contains(UserAnswer);
             }
+        }
+        public BlankSpaceModel()
+        {
+
+        }
+        public BlankSpaceModel(string rawText)
+        {
+            CorrectAnswers = rawText.Split('|').ToList();
         }
     }
 }
