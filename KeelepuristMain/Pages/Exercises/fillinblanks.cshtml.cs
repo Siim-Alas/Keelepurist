@@ -41,13 +41,9 @@ namespace KeelepuristMain
         }
         public IActionResult OnPost()
         {
-            Exercise = JsonConvert.DeserializeObject<ExerciseModel>(
-                       Request.Form["exerciseJson"]
-                       );
-
             for (var i = 0; i < Exercise.BlankSpaces.Count; i++)
             {
-                Exercise.BlankSpaces[i].UserAnswer = Request.Form[i.ToString()];
+                Exercise.BlankSpaces[i].CorrectAnswers = Exercise.BlankSpaces[i].CorrectAnswers[0].Split("\t").ToList();
             }
 
             if (Exercise.BlankSpaces.TrueForAll((e) => e.UserAnsweredRight))
