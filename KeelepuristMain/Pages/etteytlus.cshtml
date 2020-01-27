@@ -2,7 +2,7 @@
 @model KeelepuristMain.EtteytlusModel
 @{
     ViewData["Title"] = "etteytlus";
-    
+
 }
 
 <h1>etteytlus</h1>
@@ -11,14 +11,18 @@
     <source src="~/StaticContent/soundpack/@Model.WavFileString" type="audio/wav" />
 </audio>
 
-<form method="post">
-    <div>
-        <label>Sõna: </label>
-        <input class='@(Model.BlankSpace.UserAnsweredRight ? "text-info" : "")' type="text" asp-for="BlankSpace.UserAnswer" value="@Model.BlankSpace.UserAnswer" />
-    </div>
-    <input type="hidden" asp-for="WordId" value="@Model.WordId" />
-    <input type="hidden" asp-for="WavFileString" value="@Model.WavFileString" />
-    <input type="hidden" asp-for="BlankSpace.CorrectAnswers" value='@string.Join("\t", Model.BlankSpace.CorrectAnswers)' />
-    <input class="btn btn-primary" type="submit" value="Sisesta" />
-</form>
+<div>
+    <label>Sõna: </label>
+    <input id="0"
+           name='@string.Join("|", Model.BlankSpace.CorrectAnswers)'
+           type="text"
+           onclick="resetBlankSpace(0)" />
+    <button type="button" class="btn btn-primary" onclick="checkAnswers()">Esita</button>
+</div>
+
 <a class="btn btn-info" asp-page="./Etteytlus">Uus sõna</a>
+
+@section Scripts
+{
+    <script type="text/javascript" src="~/js/site.js"></script>
+}

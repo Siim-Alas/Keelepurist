@@ -16,11 +16,8 @@ namespace KeelepuristMain
             _rnd = new Random();
         }
 
-        [BindProperty]
         public int WordId { get; set; }
-        [BindProperty]
         public string WavFileString { get; set; }
-        [BindProperty]
         public BlankSpaceModel BlankSpace { get; set; }
 
         public IActionResult OnGet()
@@ -30,11 +27,6 @@ namespace KeelepuristMain
 
             SetPropertiesFromWordId(rndNum);
 
-            return Page();
-        }
-        public IActionResult OnPost()
-        {
-            BlankSpace.CorrectAnswers = BlankSpace.CorrectAnswers[0].Split("\t").ToList();
             return Page();
         }
         private void SetPropertiesFromWordId(int wordId)

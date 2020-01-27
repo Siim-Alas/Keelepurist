@@ -17,7 +17,6 @@ namespace KeelepuristMain
             _rnd = new Random();
         }
 
-        [BindProperty]
         public ExerciseModel Exercise { get; set; }
 
         public IActionResult OnGet(string exerciseName)
@@ -37,19 +36,6 @@ namespace KeelepuristMain
             var rawText = System.IO.File.ReadAllText($"wwwroot/StaticContent/exercises/{exerciseName}");
             Exercise = new ExerciseModel() { Name = exerciseName };
             Exercise.PopulateFromString(rawText);
-            return Page();
-        }
-        public IActionResult OnPost()
-        {
-            for (var i = 0; i < Exercise.BlankSpaces.Count; i++)
-            {
-                Exercise.BlankSpaces[i].CorrectAnswers = Exercise.BlankSpaces[i].CorrectAnswers[0].Split("\t").ToList();
-            }
-
-            if (Exercise.BlankSpaces.TrueForAll((e) => e.UserAnsweredRight))
-            {
-                return Page();
-            }
             return Page();
         }
     }

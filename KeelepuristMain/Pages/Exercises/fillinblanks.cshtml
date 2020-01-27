@@ -1,37 +1,32 @@
 ﻿@page
-@using Newtonsoft.Json
 @model KeelepuristMain.FillInBlanksModel
 @{
     ViewData["Title"] = "Täida lüngad";
-    var userInput = new List<string>();
 }
 
 <h1>Täida lüngad</h1>
-<form method="post">
-    <input type="hidden" asp-for="Exercise.Name" value="@Model.Exercise.Name" />
-    @for (var i = 0; i < Model.Exercise.Texts.Count + Model.Exercise.BlankSpaces.Count; i++)
+@for (var i = 0; i < Model.Exercise.Texts.Count + Model.Exercise.BlankSpaces.Count; i++)
+{
+    // Even numbers are always text
+    if (i % 2 == 0)
     {
-        // Even numbers are always text
-        if (i % 2 == 0)
-        {
-            @Model.Exercise.Texts[i / 2]
-            <input type="hidden"
-                   asp-for="Exercise.Texts[i / 2]"
-                   value="@Model.Exercise.Texts[i / 2]" />
-        }
-        // Odd numbers are always blank spaces
-        else
-        {
-            <input class='@(Model.Exercise.BlankSpaces[(i - 1) / 2].UserAnsweredRight ? "text-info" : "")'
-                   asp-for="Exercise.BlankSpaces[(i - 1) / 2].UserAnswer" type="text"
-                   value="@Model.Exercise.BlankSpaces[(i - 1) / 2].UserAnswer">
-
-            <input type="hidden"
-                   asp-for="Exercise.BlankSpaces[(i - 1) / 2].CorrectAnswers"
-                   value='@string.Join("\t", Model.Exercise.BlankSpaces[(i - 1) / 2].CorrectAnswers)' />
-        }
+        @Model.Exercise.Texts[i / 2]
     }
-    <input type="submit" value="Esita" />
-</form>
+    // Odd numbers are always blank spaces
+    else
+    {
+        <input id="@((i - 1) / 2)"
+               name='@string.Join("|", Model.Exercise.BlankSpaces[(i - 1) / 2].CorrectAnswers)'
+               type="text"
+               onclick="resetBlankSpace(@((i - 1) / 2))"
+               />
+    }
+}
+<button type="button" onclick="checkAnswers()">Esita</button>
 
 <a asp-page="/Exercises/ExerciseGlossary">Tagasi loendisse</a>
+
+@section Scripts
+{
+    <script type="text/javascript" src="~/js/site.js"></script>
+}
