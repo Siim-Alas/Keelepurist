@@ -7,7 +7,6 @@ namespace KeelepuristMain.Models
 {
     public class ExerciseModel
     {
-        public string Name { get; set; }
         public List<string> Texts { get; set; } = new List<string>();
         public List<BlankSpaceModel> BlankSpaces { get; set; } = new List<BlankSpaceModel>();
 

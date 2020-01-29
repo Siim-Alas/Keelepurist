@@ -5,13 +5,16 @@
 }
 
 <h1>Lünkadega harjutused</h1>
+<div id="linkContainer" style="display: none">
+    @foreach (var path in Model.S3objectPaths)
+    {
+        <a asp-route-exerciseName="@path" asp-page="/Exercises/FillInBlanks">@path</a>
+    }
+</div>
 
-@foreach (var dir in Model.SubDirectoryNames)
-{
-    <a asp-route-subDirectory="@dir" asp-page="/Exercises/ExerciseGlossary">@dir</a>
-}
+<div id="rootDiv"></div>
 
-@foreach (var name in Model.ExerciseNames)
+@section Scripts
 {
-    <a asp-route-exerciseName="@name" asp-page="/Exercises/FillInBlanks">@name</a>
+    <script type="text/javascript" src="~/js/fileDisplayer.js"></script>
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Amazon.S3.Model;
+using KeelepuristMain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -9,17 +11,21 @@ namespace KeelepuristMain
 {
     public class ExerciseGlossaryModel : PageModel
     {
-        public List<string> SubDirectoryNames { get; set; }
-        public List<string> ExerciseNames { get; set; }
-        public void OnGet(string subDirectory)
+        private readonly IS3Service _S3Service;
+        public ExerciseGlossaryModel(IS3Service service)
         {
-            // Currently only supports ONE level of subdirectories!!!
+            _S3Service = service;
+        }
 
-            var subDirectoryPaths = System.IO.Directory.GetDirectories($"wwwroot/StaticContent/exercises/{subDirectory}", "*", System.IO.SearchOption.TopDirectoryOnly);
-            SubDirectoryNames = subDirectoryPaths.Select((e) => e.Split('/').Last()).ToList();
+        public List<string> S3objectPaths { get; private set; } = new List<string>();
 
-            var exercisePaths = System.IO.Directory.GetFiles($"wwwroot/StaticContent/exercises/{subDirectory}");
-            ExerciseNames = exercisePaths.Select((e) => e.Split('/').Last()).ToList();
+        public async Task OnGet()
+        {
+            var response = await _S3Service.ListObjectsFromS3Async("keelepurist");
+            foreach (var s3Obj in response.S3Objects)
+            {
+                S3objectPaths.Add(s3Obj.Key);
+            }
         }
     }
 }

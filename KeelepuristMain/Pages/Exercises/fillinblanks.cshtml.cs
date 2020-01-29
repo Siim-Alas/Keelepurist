@@ -1,4 +1,5 @@
 ﻿using KeelepuristMain.Models;
+using KeelepuristMain.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,36 +7,33 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using System.IO;
+using System.Text;
 
 namespace KeelepuristMain
 {
     public class FillInBlanksModel : PageModel
     {
         private readonly Random _rnd;
-        public FillInBlanksModel()
+        private readonly IS3Service _S3Service;
+        public FillInBlanksModel(IS3Service service)
         {
             _rnd = new Random();
+            _S3Service = service;
         }
 
-        public ExerciseModel Exercise { get; set; }
+        public ExerciseModel Exercise { get; set; } = new ExerciseModel();
 
-        public IActionResult OnGet(string exerciseName)
+        public async Task<IActionResult> OnGet(string exerciseName)
         {
-            if (string.IsNullOrEmpty(exerciseName)) {
-                var exerciseNames = System.IO.Directory.GetFiles("wwwroot/StaticContent/exercises/").ToList();
-                exerciseNames = exerciseNames.Select((e) => e.Split('/').Last()).ToList();
-
-                var rndNum = _rnd.Next(0, exerciseNames.Count - 1);
-
-                var randomRawText = System.IO.File.ReadAllText($"wwwroot/StaticContent/exercises/{exerciseNames[rndNum]}");
-
-                Exercise = new ExerciseModel() { Name = exerciseNames[rndNum] };
-                Exercise.PopulateFromString(randomRawText);
-                return Page();
+            var s3Obj = await _S3Service.GetObjectFromS3Async("keelepurist", exerciseName);
+            var responseStream = s3Obj.ResponseStream;
+            string rawContent;
+            using (StreamReader reader = new StreamReader(responseStream, Encoding.Unicode))
+            {
+                rawContent = reader.ReadToEnd();
             }
-            var rawText = System.IO.File.ReadAllText($"wwwroot/StaticContent/exercises/{exerciseName}");
-            Exercise = new ExerciseModel() { Name = exerciseName };
-            Exercise.PopulateFromString(rawText);
+            Exercise.PopulateFromString(rawContent);
             return Page();
         }
     }
