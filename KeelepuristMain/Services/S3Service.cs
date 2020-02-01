@@ -16,13 +16,14 @@ namespace KeelepuristMain.Services
         {
             _client = client;
         }
-        public async Task<ListObjectsResponse> ListObjectsFromS3Async(string bucketName)
+        public async Task<ListObjectsResponse> ListObjectsFromS3Async(string bucketName, string prefix)
         {
             try
             {
                 var request = new ListObjectsRequest
                 {
-                    BucketName = bucketName
+                    BucketName = bucketName,
+                    Prefix = prefix
                 };
 
                 return await _client.ListObjectsAsync(request);
@@ -48,6 +49,25 @@ namespace KeelepuristMain.Services
             catch
             {
                 return new GetObjectResponse();
+            }
+        }
+
+        public string GetPreSignedURLFromS3(string bucketName, string key)
+        {
+            try
+            {
+                var request = new GetPreSignedUrlRequest
+                {
+                    BucketName = bucketName,
+                    Key = key,
+                    Expires = DateTime.Now.AddMinutes(5)
+                };
+
+                return _client.GetPreSignedURL(request);
+            }
+            catch
+            {
+                return "";
             }
         }
     }

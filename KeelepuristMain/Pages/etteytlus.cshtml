@@ -7,9 +7,12 @@
 
 <h1>etteytlus</h1>
 
-<audio autoplay>
-    <source src="~/StaticContent/soundpack/@Model.WavFileString" type="audio/wav" />
+<audio id="audio" autoplay>
+    <source src="@Model.WavFileURL" type="audio/wav" />
 </audio>
+<button type="button" class="btn btn-default" onclick='document.getElementById("audio").play()'>
+    Mängi heli
+</button>
 
 <div>
     <label>Sõna: </label>

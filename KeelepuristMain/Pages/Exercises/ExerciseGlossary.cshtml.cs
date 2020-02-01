@@ -19,9 +19,9 @@ namespace KeelepuristMain
 
         public List<string> S3objectPaths { get; private set; } = new List<string>();
 
-        public async Task OnGet()
+        public async Task OnGetAsync()
         {
-            var response = await _S3Service.ListObjectsFromS3Async("keelepurist");
+            var response = await _S3Service.ListObjectsFromS3Async("keelepurist", "lünkharjutused/");
             foreach (var s3Obj in response.S3Objects)
             {
                 S3objectPaths.Add(s3Obj.Key);
