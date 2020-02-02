@@ -24,24 +24,20 @@ namespace KeelepuristMain
         public string WavFileURL { get; set; }
         public BlankSpaceModel BlankSpace { get; set; }
 
-        public async Task<IActionResult> OnGetAsync()
+        public IActionResult OnGetAsync()
         {
+            // NOT all files are uploaded to AWS S3!
             var rndNum = _rnd.Next(1, 2025);
 
-            await SetPropertiesFromWordId(rndNum);
+            SetPropertiesFromWordId(rndNum);
 
             return Page();
         }
-        private async Task SetPropertiesFromWordId(int wordId)
+        private void SetPropertiesFromWordId(int wordId)
         {
-            var s3Obj = await _S3Service.GetObjectFromS3Async("keelepurist", "soundpack/soundpackcatalog.txt");
-            var responseStream = s3Obj.ResponseStream;
-            string fileCatalog;
-            using (StreamReader reader = new StreamReader(responseStream, Encoding.Unicode))
-            {
-                fileCatalog = reader.ReadToEnd();
-            }
-            var lineStringArray = fileCatalog.Split("\n")[wordId - 1].Split("\t");
+            var lineStringArray = System.IO.File.ReadLines("wwwroot/StaticContent/soundpackcatalog.txt")
+                                                .Skip(wordId - 1).Take(1).First()
+                                                .Split("\t");
 
             WavFileURL = _S3Service.GetPreSignedURLFromS3("keelepurist", "soundpack/" + lineStringArray[0]);
 
