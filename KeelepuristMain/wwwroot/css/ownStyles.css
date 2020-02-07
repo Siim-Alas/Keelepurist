@@ -1,0 +1,12 @@
+﻿
+/*Exercise blank validation styles*/
+
+.answer-correct{
+    border: solid;
+    border-color: #4cff00;
+}
+
+.answer-wrong {
+    border: solid;
+    border-color: #ff0000;
+}

@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - Keelepurist</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/ownStyles.css" />
 </head>
 <body>
     <header>
@@ -19,7 +20,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Etteytlus">Etteütlus</a>
+                            <a class="nav-link text-dark" asp-page="/Exercises/Etteytlus">Etteütlus</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-page="/Exercises/ExerciseGlossary">Lünkharjutused</a>
@@ -36,12 +37,11 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <p>Kasutatud EKI materjale, LISA LINK!!!!</p>
+        <p align="center">Etteütluseks kasutatud <a href="http://portaal.eki.ee/" target="_blank">EKI</a> materjale</p>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

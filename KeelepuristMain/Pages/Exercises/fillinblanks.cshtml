@@ -18,8 +18,7 @@
         <input id="@((i - 1) / 2)"
                name='@string.Join("|", Model.Exercise.BlankSpaces[(i - 1) / 2].CorrectAnswers)'
                type="text"
-               onclick="resetBlankSpace(@((i - 1) / 2))"
-               />
+               onclick="resetBlankSpace(@((i - 1) / 2))" />
     }
 }
 <button type="button" onclick="checkAnswers()">Esita</button>
@@ -28,5 +27,6 @@
 
 @section Scripts
 {
-    <script type="text/javascript" src="~/js/site.js"></script>
+    <script type="text/javascript" src="~/js/exerciseDisplayer.js"></script>
+    <script type="text/javascript" src="~/js/myValidate.js"></script>
 }
