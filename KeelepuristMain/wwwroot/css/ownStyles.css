@@ -1,4 +1,10 @@
 ﻿
+/*File displayer styles*/
+
+ul.file-system {
+    list-style-type: none;
+}
+
 /*Exercise blank validation styles*/
 
 .answer-correct{

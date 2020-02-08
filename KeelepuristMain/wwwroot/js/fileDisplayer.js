@@ -11,7 +11,8 @@ function displayFiles() {
 
             let li = document.createElement("li");
             let newLink = link.cloneNode();
-            newLink.textContent = path;
+            newLink.textContent = path.slice(path.lastIndexOf("/"));
+            newLink.classList.add("btn", "btn-link", "btn-small");
 
             li.appendChild(newLink);
             rootUl.appendChild(li);
@@ -36,19 +37,30 @@ function getOrCreateUlPathById(ulPath) {
     let id = "";
     for (i = 0; i < ulPath.length; i++) {
         // Appends the ID to search for by a step in the input path.
-        id += (ulPath[i] + "/");
+        id += `${ulPath[i]}/`;
         // Attempts to find the path so far from the DOM.
         let newUl = document.getElementById(id);
         // If nothing is found, creates a new ul element with an id matching the path so far.
         if (newUl === null) {
             newUl = document.createElement("ul");
             newUl.id = id;
+            newUl.classList.add("file-system");
 
             // Creates a button to show/hide the ul created.
             let btn = document.createElement("button");
-            btn.id = id + "TOGGLEBUTTON";
-            btn.textContent = "Näite/Peida " + ulPath[i];
-            btn.addEventListener("click", function () { newUl.parentNode.style.display = newUl.parentNode.style.display === "none" ? "block" : "none"; });
+            btn.id = ulPath[i];
+            btn.innerHTML = `<i class="material-icons">folder</i>${btn.id}`;
+            btn.classList.add("btn", "btn-light", "btn-small");
+            btn.addEventListener("click", function () {
+                if (newUl.parentNode.style.display === "none") {
+                    newUl.parentNode.style.display = "block";
+                    btn.innerHTML = `<i class="material-icons">folder_open</i>${btn.id}`;
+                }
+                else {
+                    newUl.parentNode.style.display = "none";
+                    btn.innerHTML = `<i class="material-icons">folder</i>${btn.id}`;
+                }
+            });
 
             let li1 = document.createElement("li");
             let li2 = document.createElement("li");
