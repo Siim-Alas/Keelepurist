@@ -24,7 +24,7 @@ function getOrCreateUlPathById(ulPath) {
     // The whole system goes inside rootUl.
 
     // Attempts to find the ul path from the DOM.
-    let ul = document.getElementById(ulPath.join("/") + "/");
+    let ul = document.getElementById(`${ulPath.join("/")}/`);
 
     // If a result is found, it gets returned.
     if (ul !== null) {
@@ -44,7 +44,7 @@ function getOrCreateUlPathById(ulPath) {
             newUl = document.createElement("ul");
             newUl.id = id;
 
-            // Creates a button to show/hide the ul created
+            // Creates a button to show/hide the ul created.
             let btn = document.createElement("button");
             btn.id = id + "TOGGLEBUTTON";
             btn.textContent = "Näite/Peida " + ulPath[i];
@@ -58,8 +58,8 @@ function getOrCreateUlPathById(ulPath) {
             ul.appendChild(li1);
             ul.appendChild(li2);
 
-            // Hides the newly created ul by default
-            newUl.parentNode.style.display = "none";
+            // Hides the new item by default.
+            li2.style.display = "none";
         }
 
         // Sets the root ul to the ul found or created to restart the loop.

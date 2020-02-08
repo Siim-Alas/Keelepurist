@@ -26,7 +26,7 @@ namespace KeelepuristMain
 
         public IActionResult OnGetAsync()
         {
-            // NOT all files are uploaded to AWS S3!
+            // NOT all sound files are uploaded to AWS S3!
             var rndNum = _rnd.Next(1, 2025);
 
             SetPropertiesFromWordId(rndNum);
@@ -39,7 +39,7 @@ namespace KeelepuristMain
                                                 .Skip(wordId - 1).Take(1).First()
                                                 .Split("\t");
 
-            WavFileURL = _S3Service.GetPreSignedURLFromS3("keelepurist", "soundpack/" + lineStringArray[0]);
+            WavFileURL = _S3Service.GetPreSignedURLFromS3("keelepurist", $"soundpack/{lineStringArray[0]}");
 
             BlankSpace = new BlankSpaceModel(new string((from c in lineStringArray.Last()
                                                          where char.IsWhiteSpace(c) || char.IsLetterOrDigit(c)
