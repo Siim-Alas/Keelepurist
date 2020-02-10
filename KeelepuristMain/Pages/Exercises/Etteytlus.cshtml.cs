@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KeelepuristMain.Models;
-using KeelepuristMain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -14,11 +13,9 @@ namespace KeelepuristMain
     public class EtteytlusModel : PageModel
     {
         private readonly Random _rnd;
-        private readonly IS3Service _S3Service;
-        public EtteytlusModel(IS3Service service)
+        public EtteytlusModel()
         {
             _rnd = new Random();
-            _S3Service = service;
         }
 
         public string WavFileURL { get; set; }
@@ -39,7 +36,7 @@ namespace KeelepuristMain
                                                 .Skip(wordId - 1).Take(1).First()
                                                 .Split("\t");
 
-            WavFileURL = _S3Service.GetPreSignedURLFromS3("keelepurist", $"soundpack/{lineStringArray[0]}");
+            // WavFileURL = _S3Service.GetPreSignedURLFromS3("keelepurist", $"soundpack/{lineStringArray[0]}");
 
             BlankSpace = new BlankSpaceModel(new string((from c in lineStringArray.Last()
                                                          where char.IsWhiteSpace(c) || char.IsLetterOrDigit(c)
