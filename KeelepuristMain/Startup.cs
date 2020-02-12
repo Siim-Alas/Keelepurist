@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Azure;
+using KeelepuristMain.Services;
 
 namespace KeelepuristMain
 {
@@ -24,6 +26,11 @@ namespace KeelepuristMain
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddSingleton<IAzureStorageService, AzureStorageService>();
+            services.AddAzureClients(builder =>
+            {
+                builder.AddBlobServiceClient(Configuration["ConnectionStrings:DefaultEndpointsProtocol=https;AccountName=keelepuristdata;AccountKey=z5hPZ7XrLm2W0U6oKWI3+FsQPysaSDFPVTbW+Kgh4z2h1UCMxSHaQRYzLEi+rnss8ZbBcgSGp9wTlmy8be83hg==;EndpointSuffix=core.windows.net"]);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

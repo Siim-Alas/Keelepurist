@@ -6,7 +6,7 @@
 
 <h1>Lünkadega harjutused</h1>
 <div id="linkContainer" style="display: none">
-    @foreach (var path in Model.S3objectPaths)
+    @foreach (var path in Model.BlobPaths)
     {
         <a asp-route-exerciseName="@path" asp-page="/Exercises/FillInBlanks">@path</a>
     }
