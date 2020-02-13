@@ -8,7 +8,7 @@
 <div id="linkContainer" style="display: none">
     @foreach (var path in Model.BlobPaths)
     {
-        <a asp-route-exerciseName="@path" asp-page="/Exercises/FillInBlanks">@path</a>
+        <a asp-route-exercisePath="@path" asp-page="/Exercises/FillInBlanks">@path</a>
     }
 </div>
 

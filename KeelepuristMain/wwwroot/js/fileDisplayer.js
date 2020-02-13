@@ -3,7 +3,7 @@ const exerciseLinks = document.getElementById("linkContainer").children;
 
 function displayFiles() {
     for (link of exerciseLinks) {
-        let path = link.textContent;
+        let path = `lünkharjutused/${link.textContent}`;
 
         if (path.includes(".txt")) {
             let rootUlPath = path.split("/").slice(0, -1);

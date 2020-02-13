@@ -11,23 +11,39 @@ namespace KeelepuristMain.Services
 {
     public class AzureStorageService : IAzureStorageService
     {
-        public CloudBlobContainer GetCloudBlobContainer()
+        public CloudBlobContainer GetCloudBlobContainer(string containerName)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json");
             IConfigurationRoot Configuration = builder.Build();
+
             CloudStorageAccount storageAccount =
                 CloudStorageAccount.Parse(Configuration["ConnectionStrings:keelepurist_AzureStorageConnectionString"]);
+
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-            CloudBlobContainer container = blobClient.GetContainerReference("eserciseswithblanks");
+            CloudBlobContainer container = blobClient.GetContainerReference(containerName);
             return container;
         }
 
-        private List<string> SearchDir(CloudBlobDirectory dir)
+        public List<string> ListBlobPathsFromContainer(string containerName)
+        {
+            CloudBlobContainer container = GetCloudBlobContainer(containerName);
+            BlobResultSegment resultSegment = container.ListBlobsSegmentedAsync(
+                "",
+                true,
+                BlobListingDetails.All,
+                1000,
+                null,
+                null, // new BlobRequestOptions(),
+                null //new OperationContext()
+                ).Result;
+
+            return SearchListBlobItem(resultSegment);
+        }
+        private List<string> SearchListBlobItem(BlobResultSegment resultSegment)
         {
             var blobs = new List<string>();
-            BlobResultSegment resultSegment = dir.ListBlobsSegmentedAsync(null).Result;
             foreach (IListBlobItem item in resultSegment.Results)
             {
                 if (item.GetType() == typeof(CloudBlockBlob))
@@ -40,39 +56,19 @@ namespace KeelepuristMain.Services
                     CloudPageBlob blob = (CloudPageBlob)item;
                     blobs.Add(blob.Name);
                 }
-                else if (item.GetType() == typeof(CloudBlobDirectory))
-                {
-                    CloudBlobDirectory d = (CloudBlobDirectory)item;
-                    blobs.AddRange(SearchDir(d));
-                }
+                // else if (item.GetType() == typeof(CloudBlobDirectory))
+                // {
+                //     CloudBlobDirectory directory = (CloudBlobDirectory)item;
+                //     var rs = directory.ListBlobsSegmentedAsync(null).Result;
+                //     blobs.AddRange(SearchListBlobItem(rs));
+                // }
             }
             return blobs;
         }
 
-        public List<string> ListBlobs()
+        public CloudBlockBlob GetBlobFromContainer(string containerName, string blobName)
         {
-            CloudBlobContainer container = GetCloudBlobContainer();
-            List<string> blobs = new List<string>();
-            BlobResultSegment resultSegment = container.ListBlobsSegmentedAsync(null).Result;
-            foreach (IListBlobItem item in resultSegment.Results)
-            {
-                if (item.GetType() == typeof(CloudBlockBlob))
-                {
-                    CloudBlockBlob blob = (CloudBlockBlob)item;
-                    blobs.Add(blob.Name);
-                }
-                else if (item.GetType() == typeof(CloudPageBlob))
-                {
-                    CloudPageBlob blob = (CloudPageBlob)item;
-                    blobs.Add(blob.Name);
-                }
-                else if (item.GetType() == typeof(CloudBlobDirectory))
-                {
-                    CloudBlobDirectory dir = (CloudBlobDirectory)item;
-                    blobs.AddRange(SearchDir(dir));
-                }
-            }
-            return blobs;
+            return GetCloudBlobContainer(containerName).GetBlockBlobReference(blobName);
         }
     }
 }

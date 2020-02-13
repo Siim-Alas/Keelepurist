@@ -1,4 +1,5 @@
 ﻿using KeelepuristMain.Models;
+using KeelepuristMain.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,20 @@ namespace KeelepuristMain
 {
     public class FillInBlanksModel : PageModel
     {
+        private readonly IAzureStorageService _AzureStorageService;
+        public FillInBlanksModel(IAzureStorageService service)
+        {
+            _AzureStorageService = service;
+        }
+
         public ExerciseModel Exercise { get; set; } = new ExerciseModel();
 
-        public IActionResult OnGet(string exerciseName)
+        public async Task<IActionResult> OnGetAsync(string exercisePath)
         {
-            // var s3Obj = await _S3Service.GetObjectFromS3Async("keelepurist", exerciseName);
-            // var responseStream = s3Obj.ResponseStream;
-            string rawContent = "";
+            var blob = _AzureStorageService.GetBlobFromContainer("eserciseswithblanks", exercisePath);
+
+            string rawContent = await blob.DownloadTextAsync();
+
             Exercise.PopulateFromString(rawContent);
             return Page();
         }

@@ -21,7 +21,7 @@ namespace KeelepuristMain
 
         public void OnGet()
         {
-            BlobPaths = _AsureStorageService.ListBlobs();
+            BlobPaths = _AsureStorageService.ListBlobPathsFromContainer("eserciseswithblanks");
         }
     }
 }
