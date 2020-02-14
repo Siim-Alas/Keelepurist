@@ -13,13 +13,8 @@ namespace KeelepuristMain.Services
     {
         public CloudBlobContainer GetCloudBlobContainer(string containerName)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json");
-            IConfigurationRoot Configuration = builder.Build();
-
             CloudStorageAccount storageAccount =
-                CloudStorageAccount.Parse(Configuration["ConnectionStrings:keelepurist_AzureStorageConnectionString"]);
+                CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING"));
 
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
             CloudBlobContainer container = blobClient.GetContainerReference(containerName);
