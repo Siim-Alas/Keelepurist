@@ -10,10 +10,10 @@ namespace KeelepuristMain
 {
     public class ExerciseGlossaryModel : PageModel
     {
-        private readonly IAzureStorageService _AsureStorageService;
+        private readonly IAzureStorageService _asureStorageService;
         public ExerciseGlossaryModel(IAzureStorageService service)
         {
-            _AsureStorageService = service;
+            _asureStorageService = service;
         }
 
 
@@ -21,7 +21,7 @@ namespace KeelepuristMain
 
         public void OnGet()
         {
-            BlobPaths = _AsureStorageService.ListBlobPathsFromContainer("eserciseswithblanks");
+            BlobPaths = _asureStorageService.ListBlobPathsFromContainer("eserciseswithblanks");
         }
     }
 }

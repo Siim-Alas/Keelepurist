@@ -11,5 +11,6 @@ namespace KeelepuristMain.Services
         public CloudBlobContainer GetCloudBlobContainer(string containerName);
         public List<string> ListBlobPathsFromContainer(string containerName);
         public CloudBlockBlob GetBlobFromContainer(string containerName, string blobName);
+        public string GetServiceSASUriForBlob(CloudBlob blob);
     }
 }

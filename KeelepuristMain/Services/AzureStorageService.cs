@@ -56,12 +56,6 @@ namespace KeelepuristMain.Services
                     CloudPageBlob blob = (CloudPageBlob)item;
                     blobs.Add(blob.Name);
                 }
-                // else if (item.GetType() == typeof(CloudBlobDirectory))
-                // {
-                //     CloudBlobDirectory directory = (CloudBlobDirectory)item;
-                //     var rs = directory.ListBlobsSegmentedAsync(null).Result;
-                //     blobs.AddRange(SearchListBlobItem(rs));
-                // }
             }
             return blobs;
         }
@@ -69,6 +63,19 @@ namespace KeelepuristMain.Services
         public CloudBlockBlob GetBlobFromContainer(string containerName, string blobName)
         {
             return GetCloudBlobContainer(containerName).GetBlockBlobReference(blobName);
+        }
+
+        public string GetServiceSASUriForBlob(CloudBlob blob)
+        {
+            string sasBlobToken;
+            SharedAccessBlobPolicy adHocSAS = new SharedAccessBlobPolicy()
+            {
+                SharedAccessExpiryTime = DateTime.Now.AddMinutes(5),
+                Permissions = SharedAccessBlobPermissions.Read
+            };
+            sasBlobToken = blob.GetSharedAccessSignature(adHocSAS);
+
+            return $"{blob.Uri}{sasBlobToken}";
         }
     }
 }

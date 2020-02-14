@@ -14,17 +14,17 @@ namespace KeelepuristMain
 {
     public class FillInBlanksModel : PageModel
     {
-        private readonly IAzureStorageService _AzureStorageService;
+        private readonly IAzureStorageService _azureStorageService;
         public FillInBlanksModel(IAzureStorageService service)
         {
-            _AzureStorageService = service;
+            _azureStorageService = service;
         }
 
         public ExerciseModel Exercise { get; set; } = new ExerciseModel();
 
         public async Task<IActionResult> OnGetAsync(string exercisePath)
         {
-            var blob = _AzureStorageService.GetBlobFromContainer("eserciseswithblanks", exercisePath);
+            var blob = _azureStorageService.GetBlobFromContainer("eserciseswithblanks", exercisePath);
 
             string rawContent = await blob.DownloadTextAsync();
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KeelepuristMain.Models;
+using KeelepuristMain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -12,9 +13,11 @@ namespace KeelepuristMain
 {
     public class EtteytlusModel : PageModel
     {
+        private readonly IAzureStorageService _azureStorageService;
         private readonly Random _rnd;
-        public EtteytlusModel()
+        public EtteytlusModel(IAzureStorageService service)
         {
+            _azureStorageService = service;
             _rnd = new Random();
         }
 
@@ -23,8 +26,8 @@ namespace KeelepuristMain
 
         public IActionResult OnGetAsync()
         {
-            // NOT all sound files are uploaded to AWS S3!
-            var rndNum = _rnd.Next(1, 2025);
+            // NOT all sound files are uploaded to Azure Blob Storage!
+            var rndNum = _rnd.Next(1, 200);
 
             SetPropertiesFromWordId(rndNum);
 
@@ -36,7 +39,8 @@ namespace KeelepuristMain
                                                 .Skip(wordId - 1).Take(1).First()
                                                 .Split("\t");
 
-            // WavFileURL = _S3Service.GetPreSignedURLFromS3("keelepurist", $"soundpack/{lineStringArray[0]}");
+            var blob = _azureStorageService.GetBlobFromContainer("soundpack", lineStringArray[0]);
+            WavFileURL = _azureStorageService.GetServiceSASUriForBlob(blob);
 
             BlankSpace = new BlankSpaceModel(new string((from c in lineStringArray.Last()
                                                          where char.IsWhiteSpace(c) || char.IsLetterOrDigit(c)
