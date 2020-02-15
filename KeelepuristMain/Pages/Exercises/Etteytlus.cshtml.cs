@@ -27,7 +27,7 @@ namespace KeelepuristMain
         public IActionResult OnGetAsync()
         {
             // NOT all sound files are uploaded to Azure Blob Storage!
-            var rndNum = _rnd.Next(1, 200);
+            var rndNum = _rnd.Next(1, 1000);
 
             SetPropertiesFromWordId(rndNum);
 
