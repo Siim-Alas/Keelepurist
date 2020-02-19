@@ -5,26 +5,28 @@
 }
 
 <h1>Täida lüngad</h1>
-@for (var i = 0; i < Model.Exercise.Texts.Count + Model.Exercise.BlankSpaces.Count; i++)
-{
-    // Even numbers are always text
-    if (i % 2 == 0)
+<div>
+    @for (var i = 0; i < Model.Exercise.Texts.Count + Model.Exercise.BlankSpaces.Count; i++)
     {
-        @Model.Exercise.Texts[i / 2]
+        // Even numbers are always text
+        if (i % 2 == 0)
+        {
+            @Model.Exercise.Texts[i / 2]
+        }
+        // Odd numbers are always blank spaces
+        else
+        {
+            <input id="@((i - 1) / 2)"
+                   name='@string.Join("|", Model.Exercise.BlankSpaces[(i - 1) / 2].CorrectAnswers)'
+                   type="text"
+                   onclick="resetBlankSpace(@((i - 1) / 2))" />
+        }
     }
-    // Odd numbers are always blank spaces
-    else
-    {
-        <input id="@((i - 1) / 2)"
-               name='@string.Join("|", Model.Exercise.BlankSpaces[(i - 1) / 2].CorrectAnswers)'
-               type="text"
-               onclick="resetBlankSpace(@((i - 1) / 2))" />
-    }
-}
-<button type="button" onclick="checkAnswers()">Esita</button>
-
-<a asp-page="/Exercises/ExerciseGlossary">Tagasi loendisse</a>
-
+</div>
+<div>
+    <button type="button" class="btn btn-primary" onclick="checkAnswers()">Esita</button>
+    <a class="btn btn-light" asp-page="/Exercises/ExerciseGlossary">Tagasi loendisse</a>
+</div>
 @section Scripts
 {
     <script type="text/javascript" src="~/js/exerciseDisplayer.js"></script>

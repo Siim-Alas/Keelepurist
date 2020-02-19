@@ -5,14 +5,16 @@
 
 }
 
-<h1>etteytlus</h1>
+<h1>Etteütlus</h1>
 
-<audio id="audio" autoplay>
-    <source src="@Model.WavFileURL" type="audio/wav" />
-</audio>
-<button type="button" class="btn btn-default" onclick='document.getElementById("audio").play()'>
-    Mängi heli
-</button>
+<div>
+    <audio id="audio" autoplay>
+        <source src="@Model.WavFileURL" type="audio/wav" />
+    </audio>
+    <button type="button" class="btn btn-default" onclick='document.getElementById("audio").play()'>
+        Mängi heli
+    </button>
+</div>
 
 <div>
     <label>Sõna: </label>
@@ -23,7 +25,9 @@
     <button type="button" class="btn btn-primary" onclick="checkAnswers()">Esita</button>
 </div>
 
-<a class="btn btn-info" asp-page="./Etteytlus">Uus sõna</a>
+<div>
+    <a class="btn btn-light" asp-page="./Etteytlus">Uus sõna</a>
+</div>
 
 @section Scripts
 {
