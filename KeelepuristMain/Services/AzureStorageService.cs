@@ -21,11 +21,11 @@ namespace KeelepuristMain.Services
             return container;
         }
 
-        public List<string> ListBlobPathsFromContainer(string containerName)
+        public List<string> ListBlobPathsFromContainer(string containerName, string prefix = "")
         {
             CloudBlobContainer container = GetCloudBlobContainer(containerName);
             BlobResultSegment resultSegment = container.ListBlobsSegmentedAsync(
-                "",
+                prefix,
                 true,
                 BlobListingDetails.All,
                 1000,

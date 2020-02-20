@@ -1,0 +1,35 @@
+﻿@page
+@model KeelepuristMain.AdminTestEditorModel
+@{
+    ViewData["Title"] = "AdminTestEditor";
+}
+
+<h1>Kontrolltöö redaktor</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="TestName">Nimi:</label>
+        <br />
+        <input asp-for="@Model.TestName" />
+    </div>
+    <div class="form-group">
+        <label for="TestContent">Sisu:</label>
+        <br />
+        <textarea asp-for="@Model.TestContent"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="IsPublic">Avalikustatud:</label>
+        <input asp-for="@Model.IsPublic" />
+    </div>
+    <div>
+        <input class="btn btn-primary" type="submit" asp-page-handler="Update" value="Salvesta muudatused" />
+    </div>
+</form>
+<form method="post">
+    <div>
+        <input type="hidden" asp-for="@Model.TestName" />
+        <input class="btn btn-danger" type="submit" asp-page-handler="Delete" value="Kustuta" />
+    </div>
+</form>
+
+<a class="btn btn-light" asp-page="./AdminTestGlossary">Tagasi loendisse</a>
