@@ -32,9 +32,11 @@ namespace KeelepuristMain
                 try
                 {
                     var blob = _azureStorageService.GetBlobFromContainer("testexercises", blobName);
+                    await blob.FetchAttributesAsync();
+
                     TestName = blob.Name;
                     TestContent = await blob.DownloadTextAsync();
-                    // TODO: Implement IsPublic property
+                    IsPublic = (blob.Metadata["ispublic"] == "True");
                 }
                 catch
                 {
@@ -50,6 +52,8 @@ namespace KeelepuristMain
             }
             var blob = _azureStorageService.GetBlobFromContainer("testexercises", TestName);
             await blob.UploadTextAsync(TestContent);
+            blob.Metadata["ispublic"] = IsPublic.ToString();
+            await blob.SetMetadataAsync();
 
             return RedirectToPage("./AdminTestGlossary");
         }
