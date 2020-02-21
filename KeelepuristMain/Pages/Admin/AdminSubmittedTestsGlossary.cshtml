@@ -1,0 +1,12 @@
+﻿@page
+@model KeelepuristMain.AdminSubmittedTestsGlossaryModel
+@{
+    ViewData["Title"] = "AdminSubmittedTestsGlossary";
+}
+
+<h1>Esitatud kontrolltööd</h1>
+
+@foreach (var submission in Model.SubmittedTests)
+{
+    <a asp-page="./AdminSubmittedTestDetail" asp-route-submittedTestName="@submission">@submission</a>
+}

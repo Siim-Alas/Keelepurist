@@ -8,20 +8,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace KeelepuristMain
 {
-    public class ExerciseGlossaryModel : PageModel
+    public class TestExerciseGlossaryModel : PageModel
     {
         private readonly IAzureStorageService _azureStorageService;
-        public ExerciseGlossaryModel(IAzureStorageService service)
+        public TestExerciseGlossaryModel(IAzureStorageService service)
         {
             _azureStorageService = service;
         }
-
-
         public List<string> BlobPaths { get; private set; }
 
         public void OnGet()
         {
-            BlobPaths = _azureStorageService.ListBlobPathsFromContainer("eserciseswithblanks");
+            BlobPaths = _azureStorageService.ListBlobPathsFromContainer("testexercises", "public/");
         }
     }
 }
