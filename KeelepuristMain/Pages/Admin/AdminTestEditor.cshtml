@@ -10,7 +10,15 @@
     <div class="form-group">
         <label for="TestName">Nimi:</label>
         <br />
-        <input asp-for="@Model.TestName" />
+        @if (string.IsNullOrWhiteSpace(Model.TestName))
+        {
+            <input asp-for="@Model.TestName" />
+        }
+        else
+        {
+            <input type="hidden" asp-for="@Model.TestName" />
+            @Model.TestName
+        }
     </div>
     <div class="form-group">
         <label for="TestContent">Sisu:</label>
@@ -28,6 +36,7 @@
 <form method="post">
     <div>
         <input type="hidden" asp-for="@Model.TestName" />
+        <input type="hidden" asp-for="@Model.IsPublic" />
         <input class="btn btn-danger" type="submit" asp-page-handler="Delete" value="Kustuta" />
     </div>
 </form>

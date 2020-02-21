@@ -32,11 +32,11 @@ namespace KeelepuristMain
                 try
                 {
                     var blob = _azureStorageService.GetBlobFromContainer("testexercises", blobName);
-                    await blob.FetchAttributesAsync();
+                    var testAvaliabilityAndNameArray = blob.Name.Split("/");
 
-                    TestName = blob.Name;
+                    TestName = testAvaliabilityAndNameArray.Last();
                     TestContent = await blob.DownloadTextAsync();
-                    IsPublic = (blob.Metadata["ispublic"] == "True");
+                    IsPublic = (testAvaliabilityAndNameArray.First() == "public");
                 }
                 catch
                 {
@@ -50,10 +50,13 @@ namespace KeelepuristMain
             {
                 return Page();
             }
-            var blob = _azureStorageService.GetBlobFromContainer("testexercises", TestName);
+            var blob = _azureStorageService.GetBlobFromContainer("testexercises",
+                                                                 $"{(IsPublic ? "public" : "hidden")}/{TestName}");
             await blob.UploadTextAsync(TestContent);
-            blob.Metadata["ispublic"] = IsPublic.ToString();
-            await blob.SetMetadataAsync();
+
+            var potentialOldBlob = _azureStorageService.GetBlobFromContainer("testexercises",
+                                                                             $"{(IsPublic ? "hidden" : "public")}/{TestName}");
+            await potentialOldBlob.DeleteIfExistsAsync();
 
             return RedirectToPage("./AdminTestGlossary");
         }
@@ -63,7 +66,8 @@ namespace KeelepuristMain
             {
                 return Page();
             }
-            var blob = _azureStorageService.GetBlobFromContainer("testexercises", TestName);
+            var blob = _azureStorageService.GetBlobFromContainer("testexercises",
+                                                                 $"{(IsPublic ? "public" : "hidden")}/{TestName}");
             await blob.DeleteIfExistsAsync();
             return RedirectToPage("./AdminTestGlossary");
         }
