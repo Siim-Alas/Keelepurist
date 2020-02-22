@@ -25,6 +25,7 @@ namespace KeelepuristMain
         public string TestContent { get; set; }
         [BindProperty]
         public bool IsPublic { get; set; }
+        public DateTimeOffset LastModified { get; set; }
         public async Task OnGetAsync(string blobName)
         {
             if (!string.IsNullOrWhiteSpace(blobName))
@@ -32,11 +33,13 @@ namespace KeelepuristMain
                 try
                 {
                     var blob = _azureStorageService.GetBlobFromContainer("testexercises", blobName);
+                    await blob.FetchAttributesAsync();
                     var testAvaliabilityAndNameArray = blob.Name.Split("/");
 
                     TestName = testAvaliabilityAndNameArray.Last();
                     TestContent = await blob.DownloadTextAsync();
                     IsPublic = (testAvaliabilityAndNameArray.First() == "public");
+                    LastModified = (DateTimeOffset)blob.Properties.LastModified;
                 }
                 catch
                 {
@@ -50,15 +53,22 @@ namespace KeelepuristMain
             {
                 return Page();
             }
-            var blob = _azureStorageService.GetBlobFromContainer("testexercises",
-                                                                 $"{(IsPublic ? "public" : "hidden")}/{TestName}");
-            await blob.UploadTextAsync(TestContent);
+            try
+            {
+                var blob = _azureStorageService.GetBlobFromContainer("testexercises",
+                                                     $"{(IsPublic ? "public" : "hidden")}/{TestName}");
+                await blob.UploadTextAsync(TestContent);
 
-            var potentialOldBlob = _azureStorageService.GetBlobFromContainer("testexercises",
-                                                                             $"{(IsPublic ? "hidden" : "public")}/{TestName}");
-            await potentialOldBlob.DeleteIfExistsAsync();
+                var potentialOldBlob = _azureStorageService.GetBlobFromContainer("testexercises",
+                                                                                 $"{(IsPublic ? "hidden" : "public")}/{TestName}");
+                await potentialOldBlob.DeleteIfExistsAsync();
 
-            return RedirectToPage("./AdminTestGlossary");
+                return RedirectToPage("./AdminTestGlossary");
+            }
+            catch
+            {
+                return Page();
+            }
         }
         public async Task<IActionResult> OnPostDeleteAsync()
         {
@@ -66,10 +76,17 @@ namespace KeelepuristMain
             {
                 return Page();
             }
-            var blob = _azureStorageService.GetBlobFromContainer("testexercises",
-                                                                 $"{(IsPublic ? "public" : "hidden")}/{TestName}");
-            await blob.DeleteIfExistsAsync();
-            return RedirectToPage("./AdminTestGlossary");
+            try
+            {
+                var blob = _azureStorageService.GetBlobFromContainer("testexercises",
+                                                     $"{(IsPublic ? "public" : "hidden")}/{TestName}");
+                await blob.DeleteIfExistsAsync();
+                return RedirectToPage("./AdminTestGlossary");
+            }
+            catch
+            {
+                return Page();
+            }
         }
     }
 }

@@ -24,12 +24,19 @@ namespace KeelepuristMain
 
         public async Task<IActionResult> OnGetAsync(string exercisePath)
         {
-            var blob = _azureStorageService.GetBlobFromContainer("eserciseswithblanks", exercisePath);
+            try
+            {
+                var blob = _azureStorageService.GetBlobFromContainer("eserciseswithblanks", exercisePath);
 
-            string rawContent = await blob.DownloadTextAsync();
+                string rawContent = await blob.DownloadTextAsync();
 
-            Exercise.PopulateFromString(rawContent);
-            return Page();
+                Exercise.PopulateFromString(rawContent);
+                return Page();
+            }
+            catch
+            {
+                return Page();
+            }
         }
     }
 }

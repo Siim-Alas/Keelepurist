@@ -6,8 +6,12 @@
 
 <h1>Kontrolltööd</h1>
 
-@foreach (var testPath in Model.BlobPaths)
-{
-    <a asp-route-testPath="@testPath"
-       asp-page="/TestExercises/TestFillInBlanks">@testPath.Substring(testPath.LastIndexOf("/"))</a>
-}
+<ul>
+    @foreach (var testPath in Model.BlobPaths)
+    {
+        <li>
+            <a asp-route-testPath="@testPath"
+               asp-page="/TestExercises/TestFillInBlanks">@testPath.Substring(testPath.LastIndexOf("/"))</a>
+        </li>
+    }
+</ul>

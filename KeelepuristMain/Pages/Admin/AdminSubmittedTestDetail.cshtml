@@ -2,8 +2,34 @@
 @model KeelepuristMain.AdminSubmittedTestDetailModel
 @{
     ViewData["Title"] = "AdminSubmittedTestDetail";
+    string[] blankSpaceContentArray = new string[2];
 }
 
 <h1>Esitatud kontrolltöö vaatamine</h1>
+<h4>Viimati muudetud: @Model.LastModified.ToLocalTime()</h4>
 
-@Model.TestContent
+@for (var i = 0; i < Model.TestContentArray.Length; i++)
+{
+    // Even numbers are always text
+    if (i % 2 == 0)
+    {
+        @Model.TestContentArray[i]
+    }
+    // Odd numbers are always blank spaces
+    else
+    {
+        blankSpaceContentArray = Model.TestContentArray[i].Split("|");
+
+        <input type="text"
+                class="@(blankSpaceContentArray[0] == "True" ? "answer-correct" : "answer-wrong")"
+                value="@blankSpaceContentArray[1]"
+                size="@(blankSpaceContentArray[1].Length + 1)"
+                disabled />
+    }
+}
+<form method="post">
+    <input type="hidden" asp-for="SubmissionName" />
+    <input class="btn btn-danger" type="submit" value="Kustuta testisooritus" />
+</form>
+
+<a class="btn btn-light" asp-page="./AdminSubmittedTestsGlossary">Tagasi loendisse</a>

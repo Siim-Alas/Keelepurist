@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using KeelepuristMain.Services;
@@ -15,20 +16,44 @@ namespace KeelepuristMain
         {
             _azureStorageService = service;
         }
-        public string TestContent { get; set; }
-        public async Task OnGetAsync(string submittedTestName)
+        [BindProperty]
+        [Required]
+        public string SubmissionName { get; set; }
+        public DateTimeOffset LastModified { get; set; }
+        public string[] TestContentArray { get; set; }
+        public async Task<IActionResult> OnGetAsync(string submittedTestName)
         {
             if (!string.IsNullOrWhiteSpace(submittedTestName))
             {
                 try
                 {
                     var blob = _azureStorageService.GetBlobFromContainer("submittedtests", submittedTestName);
-                    TestContent = await blob.DownloadTextAsync();
+                    await blob.FetchAttributesAsync();
+                    var blobText = await blob.DownloadTextAsync();
+
+                    SubmissionName = submittedTestName;
+                    LastModified = (DateTimeOffset)blob.Properties.LastModified;
+                    TestContentArray = blobText.Split("///");
                 }
                 catch
                 {
-
+                    
                 }
+            }
+            return Page();
+        }
+        public async Task<IActionResult> OnPostAsync()
+        {
+            try
+            {
+                var blob = _azureStorageService.GetBlobFromContainer("submittedtests", SubmissionName);
+                await blob.DeleteIfExistsAsync();
+
+                return RedirectToPage("./AdminSubmittedTestsGlossary");
+            }
+            catch
+            {
+                return Page();
             }
         }
     }

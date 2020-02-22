@@ -8,14 +8,17 @@
 
 <form method="post">
     <div class="form-group">
-        <label for="TestName">Nimi:</label>
-        <br />
         @if (string.IsNullOrWhiteSpace(Model.TestName))
         {
+            <label for="TestName">Nimi:</label>
+            <br />
             <input asp-for="@Model.TestName" />
         }
         else
         {
+            <h4>Viimati muudetud: @Model.LastModified.ToLocalTime()</h4>
+            <label for="TestName">Nimi:</label>
+            <br />
             <input type="hidden" asp-for="@Model.TestName" />
             @Model.TestName
         }
@@ -23,7 +26,7 @@
     <div class="form-group">
         <label for="TestContent">Sisu:</label>
         <br />
-        <textarea asp-for="@Model.TestContent"></textarea>
+        <textarea rows="10" cols="100" asp-for="@Model.TestContent"></textarea>
     </div>
     <div class="form-group">
         <label for="IsPublic">Avalikustatud:</label>

@@ -8,7 +8,11 @@
 
 <a asp-page="./AdminTestEditor">Loo uus kontrolltest</a>
 
-@foreach (var path in Model.TestExercises)
-{
-    <a asp-page="./AdminTestEditor" asp-route-blobName="@path">@path</a>
-}
+<ul>
+    @foreach (var path in Model.TestExercises)
+    {
+        <li>
+            <a asp-page="./AdminTestEditor" asp-route-blobName="@path">@path</a>
+        </li>
+    }
+</ul>

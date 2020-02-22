@@ -19,7 +19,14 @@ namespace KeelepuristMain
 
         public void OnGet()
         {
-            BlobPaths = _azureStorageService.ListBlobPathsFromContainer("testexercises", "public/");
+            try
+            {
+                BlobPaths = _azureStorageService.ListBlobPathsFromContainer("testexercises", "public/");
+            }
+            catch
+            {
+
+            }
         }
     }
 }

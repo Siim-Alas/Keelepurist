@@ -19,7 +19,14 @@ namespace KeelepuristMain
         public List<string> SubmittedTests { get; set; }
         public void OnGet()
         {
-            SubmittedTests = _azureStorageService.ListBlobPathsFromContainer("submittedtests");
+            try
+            {
+                SubmittedTests = _azureStorageService.ListBlobPathsFromContainer("submittedtests");
+            }
+            catch
+            {
+
+            }
         }
     }
 }
