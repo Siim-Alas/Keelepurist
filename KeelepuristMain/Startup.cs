@@ -34,7 +34,8 @@ namespace KeelepuristMain
             });
 
             services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
-                    .AddAzureAD(options => Configuration.Bind("AzureAd", options));
+                    .AddAzureAD(options => Configuration.Bind("AzureAd", options))
+                    .AddCookie();
 
             services.AddAuthorization(options =>
             {
@@ -73,6 +74,7 @@ namespace KeelepuristMain
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
 
             app.UseRouting();
 
