@@ -47,7 +47,7 @@ namespace KeelepuristMain
             services.AddRazorPages()
                 .AddRazorPagesOptions(options =>
                 {
-                    options.Conventions.AuthorizeFolder("/Admin");
+                    options.Conventions.AuthorizeFolder("/Admin", "admin-only");
                     options.Conventions.AuthorizeFolder("/TestExercises");
                 });
 
