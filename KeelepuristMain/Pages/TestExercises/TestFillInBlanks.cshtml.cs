@@ -60,9 +60,8 @@ namespace KeelepuristMain
                 }
             }
 
-            //TODO: Implement proper naming
             var blob = _azureStorageService.GetBlobFromContainer("submittedtests",
-                                                                 $"{TestPath.Substring(TestPath.LastIndexOf("/"))}/tempouser1");
+                                                                 $"{TestPath.Substring(TestPath.LastIndexOf("/"))}/{User.Claims.Where(c => c.Type == "name").First().Value}");
             await blob.UploadTextAsync(answer);
             return RedirectToPage("/TestExercises/TestExerciseGlossary");
         }
