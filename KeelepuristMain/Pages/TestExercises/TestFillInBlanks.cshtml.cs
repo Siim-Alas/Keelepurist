@@ -20,12 +20,24 @@ namespace KeelepuristMain
         public ExerciseModel Exercise { get; set; } = new ExerciseModel();
 
         [BindProperty]
+        public bool UserAlreadySubmitted { get; set; }
+        [BindProperty]
         public string TestPath { get; set; }
         [BindProperty]
         public List<string> UserAnswers { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string testPath)
         {
+            UserAlreadySubmitted = await _azureStorageService
+                                         .GetBlobFromContainer(
+                                         "submittedtests",
+                                         $"{TestPath.Substring(TestPath.LastIndexOf("/"))}/{User.Claims.Where(c => c.Type == "name").First().Value}"
+                                         ).ExistsAsync();
+
+            if (UserAlreadySubmitted)
+            {
+                return Page();
+            }
             var blob = _azureStorageService.GetBlobFromContainer("testexercises", testPath);
             TestPath = testPath;
 
@@ -36,7 +48,7 @@ namespace KeelepuristMain
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || UserAlreadySubmitted)
             {
                 return Page();
             }
