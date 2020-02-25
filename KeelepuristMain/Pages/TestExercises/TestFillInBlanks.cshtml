@@ -12,26 +12,27 @@
 else
 {
     <p class="text-danger">Vajutades nuppu "Esita ja lõpeta" esitad vastused lõplikult hindajale ning ei saa neid hiljem muuta.</p>
+
+    <form method="post">
+        @for (var i = 0; i < Model.Exercise.Texts.Count + Model.Exercise.BlankSpaces.Count; i++)
+        {
+            // Even numbers are always text
+            if (i % 2 == 0)
+            {
+                @Model.Exercise.Texts[i / 2]
+            }
+            // Odd numbers are always blank spaces
+            else
+            {
+                <input asp-for="UserAnswers[(i - 1) / 2]"
+                       size="@(Model.Exercise.BlankSpaces[(i - 1) / 2].CorrectAnswers[0].Length + 1)" />
+            }
+        }
+        <input type="hidden" asp-for="UserAlreadySubmitted" />
+        <input type="hidden" asp-for="TestPath" />
+        <input type="submit" value="Esita ja lõpeta" />
+    </form>
 }
-<form method="post">
-    @for (var i = 0; i < Model.Exercise.Texts.Count + Model.Exercise.BlankSpaces.Count; i++)
-    {
-        // Even numbers are always text
-        if (i % 2 == 0)
-        {
-            @Model.Exercise.Texts[i / 2]
-        }
-        // Odd numbers are always blank spaces
-        else
-        {
-            <input asp-for="UserAnswers[(i - 1) / 2]"
-                   size="@(Model.Exercise.BlankSpaces[(i - 1) / 2].CorrectAnswers[0].Length + 1)" />
-        }
-    }
-    <input type="hidden" asp-for="UserAlreadySubmitted" />
-    <input type="hidden" asp-for="TestPath" />
-    <input type="submit" value="Esita ja lõpeta" />
-</form>
 <div>
     <a class="btn btn-light" asp-page="/TestExercises/TestExerciseGlossary">Tagasi loendisse</a>
 </div>

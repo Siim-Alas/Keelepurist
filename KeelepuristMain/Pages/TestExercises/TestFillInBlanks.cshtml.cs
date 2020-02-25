@@ -31,7 +31,7 @@ namespace KeelepuristMain
             UserAlreadySubmitted = await _azureStorageService
                                          .GetBlobFromContainer(
                                          "submittedtests",
-                                         $"{TestPath.Substring(TestPath.LastIndexOf("/"))}/{User.Claims.Where(c => c.Type == "name").First().Value}"
+                                         $"{testPath.Substring(testPath.LastIndexOf("/"))}/{User.Claims.Where(c => c.Type == "name").First().Value}"
                                          ).ExistsAsync();
 
             if (UserAlreadySubmitted)
