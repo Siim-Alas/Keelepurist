@@ -11,36 +11,38 @@
 <h1>Esitatud kontrolltöö vaatamine</h1>
 <h4>Viimati muudetud: @Model.LastModified.ToLocalTime()</h4>
 
-@for (var i = 0; i < Model.TestContentArray.Length; i++)
-{
-    // Even numbers are always text
-    if (i % 2 == 0)
+<div class="exercise-container">
+    @for (var i = 0; i < Model.TestContentArray.Length; i++)
     {
-        @Model.TestContentArray[i]
-    }
-    // Odd numbers are always blank spaces
-    else
-    {
-        blankSpaceContentArray = Model.TestContentArray[i].Split("|");
-        if (blankSpaceContentArray[0] == "True")
+        // Even numbers are always text
+        if (i % 2 == 0)
         {
-            totalAnswers += 1;
-            correctAnswers += 1;
-            className = "answer-correct";
+            @Model.TestContentArray[i]
         }
+        // Odd numbers are always blank spaces
         else
         {
-            totalAnswers += 1;
-            className = "answer-wrong";
-        }
+            blankSpaceContentArray = Model.TestContentArray[i].Split("|");
+            if (blankSpaceContentArray[0] == "True")
+            {
+                totalAnswers += 1;
+                correctAnswers += 1;
+                className = "answer-correct";
+            }
+            else
+            {
+                totalAnswers += 1;
+                className = "answer-wrong";
+            }
 
-        <input type="text"
-               class="@className"
-               value="@blankSpaceContentArray[1]"
-               size="@(blankSpaceContentArray[1].Length + 1)"
-               disabled />
+            <input type="text"
+                   class="@className"
+                   value="@blankSpaceContentArray[1]"
+                   size="@(blankSpaceContentArray[1].Length + 1)"
+                   disabled />
+        }
     }
-}
+</div>
 
 @if (totalAnswers != 0)
 {

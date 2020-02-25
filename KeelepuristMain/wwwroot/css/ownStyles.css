@@ -5,7 +5,14 @@ ul.file-system {
     list-style-type: none;
 }
 
-/*Exercise blank validation styles*/
+/*Exercise blank styles*/
+.exercise-container{
+    font-size: 0;
+}
+
+.exercise-container > * {
+    font-size: initial;
+}
 
 .answer-correct{
     border: solid;

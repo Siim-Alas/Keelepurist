@@ -23,7 +23,7 @@ namespace KeelepuristMain
         {
             try
             {
-                BlobPaths = _azureStorageService.ListBlobPathsFromContainer("eserciseswithblanks");
+                BlobPaths = _azureStorageService.ListBlobPathsFromContainer("exerciseswithblanks");
             }
             catch
             {

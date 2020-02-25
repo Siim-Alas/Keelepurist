@@ -26,7 +26,7 @@ namespace KeelepuristMain
         {
             try
             {
-                var blob = _azureStorageService.GetBlobFromContainer("eserciseswithblanks", exercisePath);
+                var blob = _azureStorageService.GetBlobFromContainer("exerciseswithblanks", exercisePath);
 
                 string rawContent = await blob.DownloadTextAsync();
 

@@ -5,23 +5,23 @@
 }
 
 <h1>Täida lüngad</h1>
-<div>
-    @for (var i = 0; i < Model.Exercise.Texts.Count + Model.Exercise.BlankSpaces.Count; i++)
+<div class="exercise-container">
+@for (var i = 0; i < Model.Exercise.Texts.Count + Model.Exercise.BlankSpaces.Count; i++)
+{
+    // Even numbers are always text
+    if (i % 2 == 0)
     {
-        // Even numbers are always text
-        if (i % 2 == 0)
-        {
-            @Model.Exercise.Texts[i / 2]
-        }
-        // Odd numbers are always blank spaces
-        else
-        {
-            <input id="@((i - 1) / 2)"
-                   name='@string.Join("|", Model.Exercise.BlankSpaces[(i - 1) / 2].CorrectAnswers)'
-                   type="text"
-                   onclick="resetBlankSpace(@((i - 1) / 2))" />
-        }
+        <span>@Model.Exercise.Texts[i / 2]</span>
     }
+    // Odd numbers are always blank spaces
+    else
+    {
+        <input id="@((i - 1) / 2)"
+                name='@string.Join("|", Model.Exercise.BlankSpaces[(i - 1) / 2].CorrectAnswers)'
+                type="text"
+                onclick="resetBlankSpace(@((i - 1) / 2))" />
+    }
+}
 </div>
 <div>
     <button type="button" class="btn btn-primary" onclick="checkAnswers()">Esita</button>

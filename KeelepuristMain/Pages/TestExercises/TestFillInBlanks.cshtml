@@ -13,13 +13,13 @@ else
 {
     <p class="text-danger">Vajutades nuppu "Esita ja lõpeta" esitad vastused lõplikult hindajale ning ei saa neid hiljem muuta.</p>
 
-    <form method="post">
+    <form class="exercise-container" method="post">
         @for (var i = 0; i < Model.Exercise.Texts.Count + Model.Exercise.BlankSpaces.Count; i++)
         {
             // Even numbers are always text
             if (i % 2 == 0)
             {
-                @Model.Exercise.Texts[i / 2]
+                <span>@Model.Exercise.Texts[i / 2]</span>
             }
             // Odd numbers are always blank spaces
             else
