@@ -62,13 +62,16 @@
         </nav>
     </header>
     <div class="container">
+        <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
-        <p align="center">Etteütluseks kasutatud <a href="http://portaal.eki.ee/" target="_blank">EKI</a> materjale</p>
+        <p align="center">
+            &copy; @DateTime.Now.Year - Siim Alas - <a asp-page="/Privacy">Privaatsus</a> - Etteütluseks kasutatud <a href="http://portaal.eki.ee/" target="_blank">EKI</a> materjale
+        </p>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
