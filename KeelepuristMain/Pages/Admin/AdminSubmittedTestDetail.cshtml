@@ -3,6 +3,9 @@
 @{
     ViewData["Title"] = "AdminSubmittedTestDetail";
     string[] blankSpaceContentArray = new string[2];
+    string className = "";
+    decimal correctAnswers = 0;
+    decimal totalAnswers = 0;
 }
 
 <h1>Esitatud kontrolltöö vaatamine</h1>
@@ -19,14 +22,33 @@
     else
     {
         blankSpaceContentArray = Model.TestContentArray[i].Split("|");
+        if (blankSpaceContentArray[0] == "True")
+        {
+            totalAnswers += 1;
+            correctAnswers += 1;
+            className = "answer-correct";
+        }
+        else
+        {
+            totalAnswers += 1;
+            className = "answer-wrong";
+        }
 
         <input type="text"
-                class="@(blankSpaceContentArray[0] == "True" ? "answer-correct" : "answer-wrong")"
-                value="@blankSpaceContentArray[1]"
-                size="@(blankSpaceContentArray[1].Length + 1)"
-                disabled />
+               class="@className"
+               value="@blankSpaceContentArray[1]"
+               size="@(blankSpaceContentArray[1].Length + 1)"
+               disabled />
     }
 }
+
+@if (totalAnswers != 0)
+{
+    <p>
+        @(Math.Round((correctAnswers / totalAnswers) * 100, MidpointRounding.AwayFromZero))% õieti vastatud.
+    </p>
+}
+
 <form method="post">
     <input type="hidden" asp-for="SubmissionName" />
     <input class="btn btn-danger" type="submit" value="Kustuta testisooritus" />

@@ -32,24 +32,27 @@
                     {
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Tere tulemast, @User.Claims.Where(c => c.Type == "name").First().Value!</a>
+                                <a class="nav-link disabled" href="#">Tere tulemast, @User.Claims.Where(c => c.Type == "name").First().Value!</a>
                             </li>
                             <li class="nav-item">
-                                <a href="/.auth/logout">Logi välja</a>
+                                <a class="nav-link text-primary" href="/.auth/logout?post_login_redirect_url=/">Logi välja</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-page="/TestExercises/TestExerciseGlossary">Kontrolltööd</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-page="/Admin/AdminIndex">Haldus</a>
-                            </li>
+                            @if (User.HasClaim("groups", "493a2009-e41c-4395-8270-175e59e83efc"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Admin/AdminIndex">Haldus</a>
+                                </li>
+                            }
                         </ul>
                     }
                     else
                     {
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a href="/.auth/login/aad?post_login_redirect_url=/">Logi sisse</a>
+                                <a class="nav-link text-primary" href="/.auth/login/aad?post_login_redirect_url=/">Logi sisse</a>
                             </li>
                         </ul>
                     }
