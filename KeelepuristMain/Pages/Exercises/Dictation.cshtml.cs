@@ -11,11 +11,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace KeelepuristMain
 {
-    public class EtteytlusModel : PageModel
+    public class DictationModel : PageModel
     {
         private readonly IAzureStorageService _azureStorageService;
         private readonly Random _rnd;
-        public EtteytlusModel(IAzureStorageService service)
+        public DictationModel(IAzureStorageService service)
         {
             _azureStorageService = service;
             _rnd = new Random();
@@ -29,7 +29,7 @@ namespace KeelepuristMain
             try
             {
                 // NOT all sound files are uploaded to Azure Blob Storage!
-                var rndNum = _rnd.Next(1, 3000);
+                var rndNum = _rnd.Next(1, 7000);
 
                 SetPropertiesFromWordId(rndNum);
 
