@@ -28,8 +28,7 @@ namespace KeelepuristMain
         {
             try
             {
-                // NOT all sound files are uploaded to Azure Blob Storage!
-                var rndNum = _rnd.Next(1, 7000);
+                var rndNum = _rnd.Next(1, 11502);
 
                 SetPropertiesFromWordId(rndNum);
 
