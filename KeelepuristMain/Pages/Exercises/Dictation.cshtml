@@ -12,7 +12,7 @@
         <source src="@Model.WavFileURL" type="audio/wav" />
     </audio>
     <button type="button" class="btn btn-default" onclick='document.getElementById("audio").play()'>
-        Mängi heli
+        <i class="material-icons" style="font-size:1em">play_circle_outline</i>  Mängi heli
     </button>
 </div>
 
@@ -22,7 +22,9 @@
            name='@string.Join("|", Model.BlankSpace.CorrectAnswers)'
            type="text"
            onclick="resetBlankSpace(0)" />
-    <button type="button" class="btn btn-primary" onclick="checkAnswers()">Esita</button>
+    <button type="button" class="btn btn-primary" onclick="checkAnswers()">
+        <i class="material-icons" style="font-size:1em">done</i>  Esita
+    </button>
 </div>
 
 <div>

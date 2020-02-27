@@ -6,15 +6,17 @@
 
 <h1>Esitatud kontrolltööd</h1>
 
-<ul>
+<ul class="file-system">
     @foreach (var submission in Model.SubmittedTests)
     {
         <li>
-            <a asp-page="./AdminSubmittedTestDetail" asp-route-submittedTestName="@submission">@submission</a>
+            <a class="btn btn-link btn-small" asp-page="./AdminSubmittedTestDetail" asp-route-submittedTestName="@submission">
+                @submission
+            </a>
         </li>
     }
 </ul>
 
 <a class="btn btn-light" asp-page="./AdminIndex">
-    <i class="material-icons" style="font-size:1.1em">arrow_back</i>  Tagasi haldusesilehele
+    <i class="material-icons" style="font-size:1em">arrow_back</i>  Tagasi haldusesilehele
 </a>

@@ -33,7 +33,7 @@
         <input asp-for="@Model.IsPublic" />
     </div>
     <button class="btn btn-primary" type="submit" asp-page-handler="Update">
-        <i class="material-icons" style="font-size:1.5em">publish</i>  Salvesta muudatused
+        <i class="material-icons" style="font-size:1em">publish</i>  Salvesta muudatused
     </button>
 </form>
 <form method="post">
@@ -42,10 +42,10 @@
         <input type="hidden" asp-for="@Model.IsPublic" />
     </div>
     <button class="btn btn-danger" type="submit" asp-page-handler="Delete">
-        <i class="material-icons" style="font-size:1.5em">delete_forever</i>  Kustuta
+        <i class="material-icons" style="font-size:1em">delete_forever</i>  Kustuta
     </button>
 </form>
 
 <a class="btn btn-light" asp-page="./AdminTestGlossary">
-    <i class="material-icons" style="font-size:1.1em">arrow_back</i>  Tagasi loendisse
+    <i class="material-icons" style="font-size:1em">arrow_back</i>  Tagasi loendisse
 </a>
