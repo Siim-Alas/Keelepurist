@@ -1,7 +1,7 @@
 ﻿@page
 @model KeelepuristMain.DictationModel
 @{
-    ViewData["Title"] = "etteütlus";
+    ViewData["Title"] = "Etteütlus";
 
 }
 
@@ -21,7 +21,8 @@
     <input id="0"
            name='@string.Join("|", Model.BlankSpace.CorrectAnswers)'
            type="text"
-           onclick="resetBlankSpace(0)" />
+           onclick="resetBlankSpace(0)"
+           autofocus />
     <button type="button" class="btn btn-primary" onclick="checkAnswers()">
         <i class="material-icons" style="font-size:1em">done</i>  Esita
     </button>
