@@ -6,15 +6,21 @@
 
 <h1>Kontrolltööde haldus</h1>
 
-<a asp-page="./AdminTestEditor">Loo uus kontrolltest</a>
+<a class="btn btn-light" asp-page="./AdminTestEditor">
+    Loo uus kontrolltest  <i class="material-icons" style="font-size:1.1em">add</i>
+</a>
 
-<ul>
+<ul class="file-system">
     @foreach (var path in Model.TestExercises)
     {
         <li>
-            <a asp-page="./AdminTestEditor" asp-route-blobName="@path">@path</a>
+            <a class="btn btn-link btn-small" asp-page="./AdminTestEditor" asp-route-blobName="@path">
+                @path
+            </a>
         </li>
     }
 </ul>
 
-<a class="btn btn-light" asp-page="./AdminIndex">Tagasi haldusesilehele</a>
+<a class="btn btn-light" asp-page="./AdminIndex">
+    <i class="material-icons" style="font-size:1.1em">arrow_back</i>  Tagasi haldusesilehele
+</a>

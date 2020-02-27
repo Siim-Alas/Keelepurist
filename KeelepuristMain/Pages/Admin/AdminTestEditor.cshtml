@@ -32,16 +32,20 @@
         <label for="IsPublic">Avalikustatud:</label>
         <input asp-for="@Model.IsPublic" />
     </div>
-    <div>
-        <input class="btn btn-primary" type="submit" asp-page-handler="Update" value="Salvesta muudatused" />
-    </div>
+    <button class="btn btn-primary" type="submit" asp-page-handler="Update">
+        <i class="material-icons" style="font-size:1.5em">publish</i>  Salvesta muudatused
+    </button>
 </form>
 <form method="post">
     <div>
         <input type="hidden" asp-for="@Model.TestName" />
         <input type="hidden" asp-for="@Model.IsPublic" />
-        <input class="btn btn-danger" type="submit" asp-page-handler="Delete" value="Kustuta" />
     </div>
+    <button class="btn btn-danger" type="submit" asp-page-handler="Delete">
+        <i class="material-icons" style="font-size:1.5em">delete_forever</i>  Kustuta
+    </button>
 </form>
 
-<a class="btn btn-light" asp-page="./AdminTestGlossary">Tagasi loendisse</a>
+<a class="btn btn-light" asp-page="./AdminTestGlossary">
+    <i class="material-icons" style="font-size:1.1em">arrow_back</i>  Tagasi loendisse
+</a>

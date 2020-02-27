@@ -6,12 +6,13 @@
 
 <h1>Kontrolltööd</h1>
 
-<ul>
+<ul class="file-system">
     @foreach (var testPath in Model.BlobPaths)
     {
         <li>
-            <a asp-route-testPath="@testPath"
-               asp-page="/TestExercises/TestFillInBlanks">@testPath.Substring(testPath.LastIndexOf("/"))</a>
+            <a asp-route-testPath="@testPath" asp-page="/TestExercises/TestFillInBlanks">
+                @testPath.Substring(testPath.LastIndexOf("/"))  <i class="material-icons">assignment</i>
+            </a>
         </li>
     }
 </ul>

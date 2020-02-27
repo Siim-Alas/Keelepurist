@@ -30,9 +30,12 @@ else
         }
         <input type="hidden" asp-for="UserAlreadySubmitted" />
         <input type="hidden" asp-for="TestPath" />
-        <input type="submit" value="Esita ja lõpeta" />
+
+        <button class="btn btn-danger" type="submit">
+            <i class="material-icons" style="font-size:1.5em">done</i>  Esita ja lõpeta
+        </button>
     </form>
 }
-<div>
-    <a class="btn btn-light" asp-page="/TestExercises/TestExerciseGlossary">Tagasi loendisse</a>
-</div>
+<a class="btn btn-light" asp-page="/TestExercises/TestExerciseGlossary">
+    <i class="material-icons" style="font-size:1.1em">arrow_back</i>  Tagasi loendisse
+</a>

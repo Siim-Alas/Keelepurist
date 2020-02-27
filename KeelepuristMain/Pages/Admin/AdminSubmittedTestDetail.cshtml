@@ -53,7 +53,11 @@
 
 <form method="post">
     <input type="hidden" asp-for="SubmissionName" />
-    <input class="btn btn-danger" type="submit" value="Kustuta testisooritus" />
+    <button class="btn btn-danger" type="submit">
+        <i class="material-icons" style="font-size:1.5em">delete_forever</i> Kustuta
+    </button>
 </form>
 
-<a class="btn btn-light" asp-page="./AdminSubmittedTestsGlossary">Tagasi loendisse</a>
+<a class="btn btn-light" asp-page="./AdminSubmittedTestsGlossary">
+    <i class="material-icons" style="font-size:1.1em">arrow_back</i>  Tagasi loendisse
+</a>
