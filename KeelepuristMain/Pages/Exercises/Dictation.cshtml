@@ -22,14 +22,15 @@
            name='@string.Join("|", Model.BlankSpace.CorrectAnswers)'
            type="text"
            onclick="resetBlankSpace(0)"
+           autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
            autofocus />
-    <button type="button" class="btn btn-primary" onclick="checkAnswers()">
+    <button type="button" class="btn btn-primary" onclick="submitDictation()">
         <i class="material-icons" style="font-size:1em">done</i>  Esita
     </button>
 </div>
 
 <div>
-    <a class="btn btn-light" asp-page="./Etteytlus">Uus sõna</a>
+    <a id="newWordLink" class="btn btn-light" asp-page="./Etteytlus">Uus sõna</a>
 </div>
 
 @section Scripts

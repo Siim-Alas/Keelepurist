@@ -19,7 +19,8 @@
         <input id="@((i - 1) / 2)"
                 name='@string.Join("|", Model.Exercise.BlankSpaces[(i - 1) / 2].CorrectAnswers)'
                 type="text"
-                onclick="resetBlankSpace(@((i - 1) / 2))" />
+                onclick="resetBlankSpace(@((i - 1) / 2))"
+                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
     }
 }
 </div>
