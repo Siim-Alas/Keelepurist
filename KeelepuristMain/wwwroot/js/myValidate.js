@@ -1,10 +1,22 @@
 ﻿
-function checkAnswers() {
+function submitFillInBlanks() {
     let blankSpaces = document.getElementsByTagName("input");
 
-    for (bs of blankSpaces) {
-        let correctAnswers = bs.name.split("|");
-        bs.classList.add(correctAnswers.includes(bs.value) ? "answer-correct" : "answer-wrong");
+    if (blankSpaces.length > 0) {
+        let correctAnswersPercentageTag = document.getElementById("correctAnswersPercentage");
+        let numOfCorrectAnswers = 0;
+
+        for (bs of blankSpaces) {
+            let correctAnswers = bs.name.split("|");
+            if (correctAnswers.includes(bs.value)) {
+                bs.classList.add("answer-correct");
+                numOfCorrectAnswers += 1;
+            } else {
+                bs.classList.add("answer-wrong");
+            }
+        }
+
+        correctAnswersPercentageTag.textContent = `${Math.round(100 * (numOfCorrectAnswers / blankSpaces.length))}% õige`
     }
 }
 
