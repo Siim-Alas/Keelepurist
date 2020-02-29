@@ -35,4 +35,6 @@ function submitDictation() {
     } else {
         inputTag.classList.add("answer-wrong");
     }
+
+    inputTag.blur();
 }

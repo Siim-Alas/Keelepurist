@@ -22,6 +22,7 @@
            name='@string.Join("|", Model.BlankSpace.CorrectAnswers)'
            type="text"
            onclick="resetBlankSpace(0)"
+           onkeypress="if (event.keyCode === 13) { submitDictation() }"
            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
            autofocus />
     <button type="button" class="btn btn-primary" onclick="submitDictation()">
