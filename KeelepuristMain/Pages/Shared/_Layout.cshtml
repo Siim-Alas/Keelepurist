@@ -35,7 +35,7 @@
                                 <a class="nav-link disabled" href="#"><i class="material-icons" style="font-size:1em">verified_user</i>Tere tulemast, @User.Claims.Where(c => c.Type == "name").First().Value!</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-primary" href="/.auth/logout">Logi välja</a>
+                                <a class="nav-link text-primary" href="/.auth/logout?post_logout_redirect_uri=https%3A%2F%2Fkeelepurist.azurewebsites.net%2F">Logi välja</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-page="/TestExercises/TestExerciseGlossary"><i class="material-icons" style="font-size:1em">assignment</i>  Kontrolltööd</a>

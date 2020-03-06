@@ -2,6 +2,7 @@
 @model KeelepuristMain.TestFillInBlanksModel
 @{
     ViewData["Title"] = "Lünkadega Kontrolltöö";
+    int currentCorrectAnswerLength;
 }
 
 <h1>Täida kontrolltöö lüngad</h1>
@@ -24,8 +25,10 @@ else
             // Odd numbers are always blank spaces
             else
             {
+                currentCorrectAnswerLength = Model.Exercise.BlankSpaces[(i - 1) / 2].CorrectAnswers[0].Length;
+
                 <input asp-for="UserAnswers[(i - 1) / 2]"
-                       size="@(Model.Exercise.BlankSpaces[(i - 1) / 2].CorrectAnswers[0].Length + 1)"
+                       size='@(currentCorrectAnswerLength > 4 ? currentCorrectAnswerLength.ToString() : "4")'
                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
             }
         }
