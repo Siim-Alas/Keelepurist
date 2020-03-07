@@ -14,6 +14,10 @@ ul.file-system {
     font-size: initial;
 }
 
+.exercise-container > span {
+    white-space: pre;
+}
+
 .answer-correct{
     border: solid;
     border-color: #4cff00;
