@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using KeelepuristMain.Models;
@@ -72,11 +73,8 @@ namespace KeelepuristMain
                 {
                     correctAnswers = exerciseContentArray[i].Split("|");
 
-                    // Avoids correctAnswers.Contains from returning false when answer is null.
-                    if (UserAnswers[(i - 1) / 2] == null)
-                    {
-                        UserAnswers[(i - 1) / 2] = string.Empty;
-                    }
+                    // Removes + sign appended by JS, since HTML wont submit a form with only whitespace.
+                    UserAnswers[(i - 1) / 2] = UserAnswers[(i - 1) / 2].Remove(UserAnswers[(i - 1) / 2].Length - 1);
 
                     answer += $"///{correctAnswers.Contains(UserAnswers[(i - 1) / 2])}|{UserAnswers[(i - 1) / 2]}///";
                 }
