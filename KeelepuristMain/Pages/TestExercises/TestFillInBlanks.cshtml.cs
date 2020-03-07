@@ -28,10 +28,11 @@ namespace KeelepuristMain
 
         public async Task<IActionResult> OnGetAsync(string testPath)
         {
+            /// Because of the public/... naming convention, all TestPaths will contain /
             UserAlreadySubmitted = await _azureStorageService
                                          .GetBlobFromContainer(
                                          "submittedtests",
-                                         $"{testPath.Substring(testPath.LastIndexOf("/"))}/{User.Claims.Where(c => c.Type == "name").First().Value}"
+                                         $"{testPath.Substring(testPath.LastIndexOf("/") + 1)}/{User.Claims.Where(c => c.Type == "name").First().Value}"
                                          ).ExistsAsync();
 
             if (UserAlreadySubmitted)
@@ -57,6 +58,7 @@ namespace KeelepuristMain
             var exerciseContentArray = exerciseContent.Split("///");
 
             var answer = "";
+            string[] correctAnswers;
 
             for (var i = 0; i < exerciseContentArray.Length; i++)
             {
@@ -68,12 +70,21 @@ namespace KeelepuristMain
                 // Odd numbers are always blank spaces
                 else
                 {
-                    answer += $"///{(Array.IndexOf(exerciseContentArray[i].Split("|"), UserAnswers[(i - 1) / 2]) != -1)}|{UserAnswers[(i - 1) / 2]}///";
+                    correctAnswers = exerciseContentArray[i].Split("|");
+
+                    // Avoids correctAnswers.Contains from returning false when answer is null.
+                    if (UserAnswers[(i - 1) / 2] == null)
+                    {
+                        UserAnswers[(i - 1) / 2] = string.Empty;
+                    }
+
+                    answer += $"///{correctAnswers.Contains(UserAnswers[(i - 1) / 2])}|{UserAnswers[(i - 1) / 2]}///";
                 }
             }
 
+            /// Because of the public/... naming convention, all TestPaths will contain /
             var blob = _azureStorageService.GetBlobFromContainer("submittedtests",
-                                                                 $"{TestPath.Substring(TestPath.LastIndexOf("/"))}/{User.Claims.Where(c => c.Type == "name").First().Value}");
+                                                                 $"{TestPath.Substring(TestPath.LastIndexOf("/") + 1)}/{User.Claims.Where(c => c.Type == "name").First().Value}");
             await blob.UploadTextAsync(answer);
             return RedirectToPage("/TestExercises/TestExerciseGlossary");
         }
