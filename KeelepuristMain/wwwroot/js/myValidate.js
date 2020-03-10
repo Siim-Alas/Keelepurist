@@ -32,6 +32,12 @@ function submitDictation() {
     if (correctAnswers.includes(inputTag.value)) {
         inputTag.classList.add("answer-correct");
         document.getElementById("newWordLink").classList.replace("btn-light", "btn-primary");
+
+        document.addEventListener("keypress", event => {
+            if (event.keyCode === 13) {
+                document.getElementById("newWordLink").click();
+            }
+        });
     } else {
         inputTag.classList.add("answer-wrong");
     }
