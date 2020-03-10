@@ -33,11 +33,13 @@ function submitDictation() {
         inputTag.classList.add("answer-correct");
         document.getElementById("newWordLink").classList.replace("btn-light", "btn-primary");
 
-        document.addEventListener("keypress", event => {
-            if (event.keyCode === 13) {
-                document.getElementById("newWordLink").click();
-            }
-        });
+        setTimeout(r => {
+            document.addEventListener("keypress", event => {
+                if (event.keyCode === 13) {
+                    document.getElementById("newWordLink").click();
+                }
+            });
+        }, 250);
     } else {
         inputTag.classList.add("answer-wrong");
     }
