@@ -36,7 +36,7 @@
         <i class="material-icons" style="font-size:1em">publish</i>  Salvesta muudatused
     </button>
 </form>
-<form method="post">
+<form method="post" onsubmit="return confirm('Kas soovite kontrolltööd igaveseks kustutada?');">
     <div>
         <input type="hidden" asp-for="@Model.TestName" />
         <input type="hidden" asp-for="@Model.IsPublic" />

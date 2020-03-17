@@ -51,7 +51,7 @@
     </p>
 }
 
-<form method="post">
+<form method="post" onsubmit="return confirm('Kas soovite testisooritust igaveseks kustutada?');">
     <input type="hidden" asp-for="SubmissionName" />
     <button class="btn btn-danger" type="submit">
         <i class="material-icons" style="font-size:1em">delete_forever</i> Kustuta
