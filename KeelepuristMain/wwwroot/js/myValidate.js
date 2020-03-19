@@ -16,7 +16,7 @@ function submitFillInBlanks() {
             }
         }
 
-        correctAnswersPercentageTag.textContent = `${Math.round(100 * (numOfCorrectAnswers / blankSpaces.length))}% õige`
+        correctAnswersPercentageTag.textContent = `${Math.round(100 * (numOfCorrectAnswers / blankSpaces.length))}% õigesti vastatud.`
     }
 }
 
