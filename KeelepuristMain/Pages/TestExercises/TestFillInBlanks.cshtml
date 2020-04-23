@@ -13,6 +13,7 @@
 else
 {
     <p class="text-danger">Vajutades nuppu "Esita ja lõpeta" esitad vastused lõplikult hindajale ning ei saa neid hiljem muuta.</p>
+    <p class="text-danger">Kontrolltööde õigesti saatmiseks peab teie veebibrauseri lubama JavaScripti</p>
 
     <form class="exercise-container" method="post" onsubmit="appendPlusSignsToAnswers(@Model.Exercise.BlankSpaces.Count)">
         @for (var i = 0; i < Model.Exercise.Texts.Count + Model.Exercise.BlankSpaces.Count; i++)
@@ -28,8 +29,8 @@ else
                 currentCorrectAnswerLength = Model.Exercise.BlankSpaces[(i - 1) / 2].CorrectAnswers[0].Length;
 
                 <input asp-for="UserAnswers[(i - 1) / 2]"
-                          size='@(currentCorrectAnswerLength > 4 ? currentCorrectAnswerLength.ToString() : "4")'
-                          autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                       size='@(currentCorrectAnswerLength > 4 ? currentCorrectAnswerLength.ToString() : "4")'
+                       autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
             }
         }
         <input type="hidden" asp-for="UserAlreadySubmitted" />
