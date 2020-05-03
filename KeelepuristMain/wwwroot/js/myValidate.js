@@ -35,7 +35,7 @@ function submitDictation() {
 
         setTimeout(r => {
             document.addEventListener("keypress", event => {
-                if (event.keyCode === 13) {
+                if (event.key === "enter") {
                     document.getElementById("newWordLink").click();
                 }
             });
