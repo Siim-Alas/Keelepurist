@@ -4,9 +4,24 @@
     ViewData["Title"] = "Koduleht";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Tere tulemast keelepuristi lehele!</h1>
+<div class="jumbotron">
+    <h1 class="display-4 text-center">Tere tulemast keelepuristi lehele!</h1>
+    <p>
+        Keelepurist on lihtne keskkond eesti keele harjutamiseks. Keeleoskusi paneme proovile nii lünkharjutuste kui ka etteütlusega, kus vastuseid kontrollime automaatselt.
+    </p>
 </div>
-<p>
-    Keelepurist on lihtne keskkond eesti keele harjutamiseks. Keeleoskusi paneme proovile nii lünkharjutuste kui ka etteütlusega, kus vastuseid kontrollime automaatselt.
-</p>
+
+<div class="card-deck">
+    <div class="card" style="max-width:576px">
+        <div class="card-body">
+            <a class="card-title" asp-page="/Exercises/Dictation"><i class="material-icons" style="font-size:1em">hearing</i>  Etteütlus</a>
+            <p class="card-text">Kuula. Kirjuta. Kontrolli. Korda.</p>
+        </div>
+    </div>
+    <div class="card" style="max-width:576px">
+        <div class="card-body">
+            <a class="card-title" asp-page="/Exercises/ExerciseGlossary"><i class="material-icons" style="font-size:1em">library_books</i>  Lünkharjutused</a>
+            <p class="card-text">Vali menüüst harjutus, täida lüngad ja kontrolli vastuseid!</p>
+        </div>
+    </div>
+</div>
